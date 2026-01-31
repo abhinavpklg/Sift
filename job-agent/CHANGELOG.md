@@ -1,133 +1,77 @@
 # Changelog
-All notable changes to Sift will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [Unreleased]
+- Background service worker
+- Content scripts for form detection
+- Auto-fill functionality
 
 ---
 
-## [Unreleased]
+## [0.5.0] - 2025-01-31
 
-### Planned
-- LLM integration (OllamaClient, LLMRouter, prompts)
-- Form detection and auto-fill for Greenhouse & Lever
-- Background service worker
-- Content scripts
+### Added
+- **LLM Layer Complete** 🎉
+  - Multi-provider support with unified interface
+  - **Ollama** - Local LLM (free, private)
+  - **OpenAI** - GPT-4o, GPT-4, GPT-3.5
+  - **Anthropic** - Claude 3.5 Sonnet/Haiku
+  - **Google Gemini** - Gemini 1.5 Pro/Flash (free tier)
+  - **OpenRouter** - Access 100+ models (free tier available)
+  - **Groq** - Ultra-fast inference (free tier)
+  
+- **LLMRouter** - Unified interface
+  - Automatic fallback support
+  - Provider switching at runtime
+  - Settings integration
+  - Connection health monitoring
+
+- **Form Filling Helpers**
+  - `matchFieldToProfile()` - AI field matching
+  - `generateFormResponse()` - Answer generation
+  - `summarizeJobDescription()` - Job summaries
+  - `extractTechStack()` - Tech extraction
+  - `calculateRelevanceScore()` - Job matching
+
+- **Prompt Templates**
+  - Field matching prompts
+  - Response generation prompts
+  - Cover letter generation
+  - Common field patterns
 
 ---
 
 ## [0.4.0] - 2025-01-31
 
 ### Added
-- **Storage Layer Complete** 🎉
-  - `ProfileStorage` - User profile CRUD operations
-    - Create, read, update, delete profiles
-    - Active profile management
-    - Import/Export functionality
-    - Storage quota monitoring
-  - `SettingsStorage` - Application settings
-    - General settings (daily goal, auto-submit, dark mode)
-    - Scraping settings (time filter, platforms, delays)
-    - LLM settings (provider, endpoint, model)
-    - Credentials vault (encrypted passwords)
-    - Settings migration support
-  - `JobStorage` - Job tracking
-    - Scraped jobs queue
-    - Applied jobs history
-    - URL normalization and deduplication
-    - Batch job adding
-    - Statistics (today count, weekly count)
-    - CSV export
-  - `ResponseStorage` - AI learning
-    - Question-response pair storage
-    - Auto-categorization (salary, experience, skills, etc.)
-    - Keyword extraction
-    - Similarity matching (Jaccard)
-    - Usage tracking and rating
-    - Import/Export
-
-### Added Types
-- `UserProfile`, `PersonalInfo`, `Education`, `WorkExperience`
-- `UserSettings`, `GeneralSettings`, `ScrapingSettings`, `LLMSettings`
-- `ScrapedJob`, `AppliedJob`, `JobStatus`, `ApplicationStatus`
-- `SavedResponse`, `ResponseCategory`, `ResponseMatch`
-
-### Tests
-- ProfileStorage unit tests
-- SettingsStorage unit tests
-- JobStorage unit tests
-- ResponseStorage unit tests
+- **Storage Layer Complete**
+  - ProfileStorage - User profiles CRUD
+  - SettingsStorage - App configuration
+  - JobStorage - Job tracking & deduplication
+  - ResponseStorage - AI learning from inputs
 
 ---
 
 ## [0.3.0] - 2025-01-30
 
 ### Added
-- **Popup UI Complete**
-  - Header with Sift branding and gradient icon
-  - Today's Progress card with visual progress bar
-  - Profile switcher dropdown
-  - Quick action buttons (Fill Form, Start Sifting)
-  - LLM connection status indicator
-  - Open Dashboard button
-
-- **Options Page (Dashboard)**
-  - Sidebar navigation
-  - Profile, Job Queue, History, AI Config, Settings pages
-  - Placeholder content
-
-- **Rebranding to "Sift"**
-  - New name and tagline
-  - Updated all UI references
-
-### Fixed
-- Turbo v2 `pipeline` → `tasks` migration
-- TypeScript strict mode errors
+- Popup UI complete
+- Options page shell
+- Rebranded to "Sift"
 
 ---
 
 ## [0.2.0] - 2025-01-30
 
 ### Added
-- **Project Scaffolding**
-  - Turborepo monorepo with pnpm workspaces
-  - Chrome Extension package with Vite + React
-  - Tailwind CSS configuration
-  - Manifest V3 setup
-  - Vitest testing framework
-  - Shared types package
+- Project scaffolding
+- Turborepo + pnpm workspace
+- Vite + React + TypeScript
 
 ---
 
 ## [0.1.0] - 2025-01-30
 
 ### Added
-- **Documentation**
-  - Product Requirements Document (PRD v1.0)
-  - Module 1 Technical Specification
-  - Task Cards (47 tasks)
-  - Project State tracking
-  - Context Resume for AI sessions
-
-- **Architecture Decisions**
-  - Local-first storage with optional cloud sync
-  - Ollama for local LLM
-  - 65 ATS platforms catalogued
-  - Llama 3.2 8B selected for M1 Pro
-
----
-
-## Version Numbering
-
-| Version | Phase |
-|---------|-------|
-| 0.1.x | Planning |
-| 0.2.x | Scaffolding |
-| 0.3.x | Popup UI |
-| 0.4.x | Storage Layer |
-| 0.5.x | LLM Integration |
-| 0.6.x | Background Service |
-| 0.7.x | Content Scripts |
-| 0.8.x | Options Pages |
-| 0.9.x | Testing & Polish |
-| 1.0.0 | MVP Release |
+- Initial planning
+- PRD v1.0
+- Architecture design
