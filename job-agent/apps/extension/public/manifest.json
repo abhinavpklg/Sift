@@ -57,7 +57,7 @@
         "https://job-boards.greenhouse.io/*"
       ],
       "js": ["src/content/index.ts"],
-      "css": ["src/styles/content.css"],
+      "css": ["content.css"],
       "run_at": "document_idle"
     },
     {
@@ -66,7 +66,7 @@
         "https://*.lever.co/*/apply*"
       ],
       "js": ["src/content/index.ts"],
-      "css": ["src/styles/content.css"],
+      "css": ["content.css"],
       "run_at": "document_idle"
     },
     {
@@ -75,7 +75,7 @@
         "https://jobs.ashbyhq.com/*"
       ],
       "js": ["src/content/index.ts"],
-      "css": ["src/styles/content.css"],
+      "css": ["content.css"],
       "run_at": "document_idle"
     }
   ],
@@ -88,7 +88,7 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["icons/*"],
+      "resources": ["icons/*", "content.css"],
       "matches": ["<all_urls>"]
     }
   ]

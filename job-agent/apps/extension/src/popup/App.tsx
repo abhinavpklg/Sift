@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   Briefcase, 
   Settings, 
@@ -31,7 +31,6 @@ export default function App() {
   const [isScrapingActive, setIsScrapingActive] = useState(false);
 
   useEffect(() => {
-    // Load initial data
     loadStats();
     loadProfiles();
     checkLLMConnection();
@@ -41,7 +40,7 @@ export default function App() {
     try {
       const result = await chrome.storage.local.get(['stats']);
       if (result.stats) {
-        setStats(result.stats);
+        setStats(result.stats as Stats);
       }
     } catch (error) {
       console.error('Failed to load stats:', error);
@@ -52,8 +51,9 @@ export default function App() {
     try {
       const result = await chrome.storage.local.get(['profiles', 'activeProfileId']);
       if (result.profiles) {
-        setProfiles(result.profiles);
-        const active = result.profiles.find((p: Profile) => p.id === result.activeProfileId);
+        const profilesList = result.profiles as Profile[];
+        setProfiles(profilesList);
+        const active = profilesList.find((p) => p.id === result.activeProfileId);
         setActiveProfile(active || null);
       }
     } catch (error) {

@@ -13,7 +13,8 @@ describe('Example Tests', () => {
 
   it('should mock chrome.storage.local.get', async () => {
     const mockData = { key: 'value' };
-    vi.mocked(chrome.storage.local.get).mockResolvedValueOnce(mockData);
+    // Fix: Cast to any to avoid strict typing issues with Chrome API mocks
+    (chrome.storage.local.get as ReturnType<typeof vi.fn>).mockResolvedValueOnce(mockData);
     
     const result = await chrome.storage.local.get(['key']);
     expect(result).toEqual(mockData);
@@ -43,7 +44,6 @@ describe('URL Hashing', () => {
     const hash1 = await hashUrl(url1);
     const hash2 = await hashUrl(url2);
     
-    // Same base URL should produce same hash (params stripped)
     expect(hash1).toBe(hash2);
   });
 

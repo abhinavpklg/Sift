@@ -1,8 +1,8 @@
 // Content Script - Injected into job application pages
 console.log('AI Job Agent: Content script loaded on', window.location.href);
 
-// Listen for messages from popup/background
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+// Listen for messages - using underscore prefix for unused params
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log('Content script received message:', message);
   
   switch (message.type) {
@@ -19,10 +19,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+interface ProfileResponse {
+  success: boolean;
+  data?: { name: string; [key: string]: unknown } | null;
+  error?: string;
+}
+
 async function handleFillForm() {
   try {
-    // Get active profile from background
-    const response = await chrome.runtime.sendMessage({ type: 'GET_ACTIVE_PROFILE' });
+    const response: ProfileResponse = await chrome.runtime.sendMessage({ type: 'GET_ACTIVE_PROFILE' });
     
     if (!response.success || !response.data) {
       console.warn('No active profile found');
@@ -32,8 +37,7 @@ async function handleFillForm() {
     const profile = response.data;
     console.log('Filling form with profile:', profile.name);
     
-    // TODO: Implement actual form filling logic in CONTENT-002
-    // For now, just log that we would fill the form
+    // TODO: Implement actual form filling logic in CONTENT-005
     console.log('Form filling will be implemented in CONTENT-005');
     
     return { success: true, data: { filled: 0 } };
@@ -56,7 +60,6 @@ async function checkIfApplied() {
 }
 
 function showAppliedBadge(appliedAt: string) {
-  // Remove existing badge if any
   const existing = document.querySelector('.job-agent-applied-badge');
   if (existing) existing.remove();
   
@@ -75,7 +78,6 @@ function showAppliedBadge(appliedAt: string) {
   
   document.body.appendChild(badge);
   
-  // Auto-dismiss after 10 seconds
   setTimeout(() => badge.remove(), 10000);
 }
 
