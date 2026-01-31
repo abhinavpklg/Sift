@@ -1,5 +1,5 @@
 // Background Service Worker
-console.log('AI Job Agent: Background service worker started');
+console.log('Sift: Background service worker started');
 
 // Message listener - using underscore prefix for unused params
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
@@ -107,7 +107,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
 // Initialize on install
 chrome.runtime.onInstalled.addListener(async () => {
-  console.log('AI Job Agent installed');
+  console.log('Sift installed');
   
   const result = await chrome.storage.local.get(['stats']);
   if (!result.stats) {

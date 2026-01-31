@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AI Job Agent",
+  "name": "Sift",
   "version": "0.1.0",
-  "description": "AI-powered job application assistant - auto-fill forms, track applications, and find jobs faster",
+  "description": "Sift smarter. Apply faster. AI-powered job applications that find and fill for you.",
   
   "permissions": [
     "storage",
@@ -39,7 +39,7 @@
   
   "action": {
     "default_popup": "src/popup/index.html",
-    "default_title": "AI Job Agent",
+    "default_title": "Sift - AI Job Assistant",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",

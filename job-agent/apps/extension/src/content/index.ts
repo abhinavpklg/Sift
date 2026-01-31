@@ -1,5 +1,5 @@
 // Content Script - Injected into job application pages
-console.log('AI Job Agent: Content script loaded on', window.location.href);
+console.log('Sift: Content script loaded on', window.location.href);
 
 // Listen for messages - using underscore prefix for unused params
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {

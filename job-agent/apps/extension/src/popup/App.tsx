@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { 
-  Briefcase, 
+  Search, 
   Settings, 
   User, 
   Zap, 
@@ -89,12 +89,12 @@ export default function App() {
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-            <Briefcase className="w-5 h-5 text-white" />
+          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+            <Search className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Job Agent</h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400">AI-powered applications</p>
+            <h1 className="text-lg font-bold text-gray-900 dark:text-white">Sift</h1>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Sift smarter. Apply faster.</p>
           </div>
         </div>
         <button 
@@ -117,7 +117,7 @@ export default function App() {
           </div>
           <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
             <div 
-              className="h-full bg-primary-600 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-500"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -170,7 +170,7 @@ export default function App() {
               : 'btn-secondary'
           }`}
         >
-          {isScrapingActive ? 'Stop Scraping' : 'Start Job Search'}
+          {isScrapingActive ? 'Stop Sifting' : 'Start Sifting Jobs'}
         </button>
 
         <button
@@ -189,12 +189,12 @@ export default function App() {
             {llmConnected ? (
               <>
                 <Wifi className="w-4 h-4 text-success" />
-                <span className="text-success">Ollama Connected</span>
+                <span className="text-success">AI Connected</span>
               </>
             ) : (
               <>
                 <WifiOff className="w-4 h-4 text-error" />
-                <span className="text-error">Ollama Offline</span>
+                <span className="text-error">AI Offline</span>
               </>
             )}
           </div>

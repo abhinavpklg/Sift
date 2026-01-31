@@ -1,23 +1,23 @@
-import React from 'react';
+import { useState } from 'react';
 import { 
-  Briefcase, 
+  Search, 
   User, 
   Settings, 
   History, 
-  Search,
+  Briefcase,
   Cpu
 } from 'lucide-react';
 
 type Page = 'profile' | 'jobs' | 'history' | 'settings' | 'llm';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = React.useState<Page>('profile');
+  const [currentPage, setCurrentPage] = useState<Page>('profile');
 
   const navItems = [
     { id: 'profile' as Page, icon: User, label: 'Profile' },
-    { id: 'jobs' as Page, icon: Search, label: 'Job Queue' },
+    { id: 'jobs' as Page, icon: Briefcase, label: 'Job Queue' },
     { id: 'history' as Page, icon: History, label: 'History' },
-    { id: 'llm' as Page, icon: Cpu, label: 'LLM Config' },
+    { id: 'llm' as Page, icon: Cpu, label: 'AI Config' },
     { id: 'settings' as Page, icon: Settings, label: 'Settings' },
   ];
 
@@ -28,12 +28,12 @@ export default function App() {
         {/* Logo */}
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
-              <Briefcase className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
+              <Search className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-gray-900 dark:text-white">Job Agent</h1>
-              <p className="text-xs text-gray-500">Dashboard</p>
+              <h1 className="font-bold text-xl text-gray-900 dark:text-white">Sift</h1>
+              <p className="text-xs text-gray-500">Sift smarter. Apply faster.</p>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ export default function App() {
         {/* Footer */}
         <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <p className="text-xs text-gray-500 text-center">
-            AI Job Agent v0.1.0
+            Sift v0.1.0
           </p>
         </div>
       </aside>
@@ -81,14 +81,14 @@ export default function App() {
   );
 }
 
-// Placeholder components - will be replaced in later tasks
 function ProfilePlaceholder() {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Profile Management</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Profile Management</h2>
+      <p className="text-gray-500 mb-6">Manage your job application profiles</p>
       <div className="card">
         <p className="text-gray-600 dark:text-gray-400">
-          Profile editor will be implemented in OPTIONS-002.
+          Profile editor coming soon...
         </p>
       </div>
     </div>
@@ -98,10 +98,11 @@ function ProfilePlaceholder() {
 function JobsPlaceholder() {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Job Queue</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Job Queue</h2>
+      <p className="text-gray-500 mb-6">Jobs sifted and ready to apply</p>
       <div className="card">
         <p className="text-gray-600 dark:text-gray-400">
-          Job queue will be implemented in OPTIONS-004.
+          Job queue coming soon...
         </p>
       </div>
     </div>
@@ -111,10 +112,11 @@ function JobsPlaceholder() {
 function HistoryPlaceholder() {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Application History</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Application History</h2>
+      <p className="text-gray-500 mb-6">Track your job applications</p>
       <div className="card">
         <p className="text-gray-600 dark:text-gray-400">
-          History page will be implemented in OPTIONS-005.
+          History coming soon...
         </p>
       </div>
     </div>
@@ -124,10 +126,11 @@ function HistoryPlaceholder() {
 function LLMPlaceholder() {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">LLM Configuration</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">AI Configuration</h2>
+      <p className="text-gray-500 mb-6">Configure your local or cloud AI</p>
       <div className="card">
         <p className="text-gray-600 dark:text-gray-400">
-          LLM configuration will be implemented in OPTIONS-006.
+          AI configuration coming soon...
         </p>
       </div>
     </div>
@@ -137,10 +140,11 @@ function LLMPlaceholder() {
 function SettingsPlaceholder() {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Settings</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Settings</h2>
+      <p className="text-gray-500 mb-6">Customize your Sift experience</p>
       <div className="card">
         <p className="text-gray-600 dark:text-gray-400">
-          Settings page will be implemented in OPTIONS-003.
+          Settings coming soon...
         </p>
       </div>
     </div>
