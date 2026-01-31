@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "version": "0.4.0",
+    "lastUpdated": "2025-01-31",
+    "totalTasks": 47,
+    "completedTasks": 16,
+    "currentPhase": "llm-integration"
+  },
+  "phases": [
+    {
+      "id": "PHASE-0",
+      "name": "Planning & Architecture",
+      "status": "complete"
+    },
+    {
+      "id": "PHASE-1",
+      "name": "Project Scaffolding",
+      "status": "complete",
+      "completedDate": "2025-01-30"
+    },
+    {
+      "id": "PHASE-2",
+      "name": "Popup UI",
+      "status": "complete",
+      "completedDate": "2025-01-30"
+    },
+    {
+      "id": "PHASE-3",
+      "name": "Storage Layer",
+      "status": "complete",
+      "completedDate": "2025-01-31",
+      "tasks": [
+        { "id": "STORAGE-001", "title": "ProfileStorage", "status": "complete" },
+        { "id": "STORAGE-002", "title": "SettingsStorage", "status": "complete" },
+        { "id": "STORAGE-003", "title": "JobStorage", "status": "complete" },
+        { "id": "STORAGE-004", "title": "ResponseStorage", "status": "complete" }
+      ]
+    },
+    {
+      "id": "PHASE-4",
+      "name": "LLM Integration",
+      "status": "in-progress",
+      "tasks": [
+        {
+          "id": "LLM-001",
+          "title": "Implement OllamaClient",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 60,
+          "description": "Create Ollama API client for local LLM",
+          "acceptanceCriteria": [
+            "Health check endpoint",
+            "List models endpoint",
+            "Generate text endpoint",
+            "Configurable endpoint URL",
+            "Error handling and timeouts"
+          ],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/OllamaClient.ts",
+            "apps/extension/src/shared/llm/types.ts"
+          ],
+          "testFile": "apps/extension/src/__tests__/OllamaClient.test.ts"
+        },
+        {
+          "id": "LLM-002",
+          "title": "Implement LLMRouter",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "Router to switch between LLM providers",
+          "acceptanceCriteria": [
+            "Provider selection logic",
+            "Unified interface",
+            "Fallback handling",
+            "Settings integration"
+          ],
+          "dependencies": ["LLM-001"],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/LLMRouter.ts"
+          ]
+        },
+        {
+          "id": "LLM-003",
+          "title": "Create Prompt Templates",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "Prompt templates for form filling tasks",
+          "acceptanceCriteria": [
+            "Field matching prompt",
+            "Response generation prompt",
+            "Job summary prompt",
+            "Template interpolation"
+          ],
+          "dependencies": ["LLM-001"],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/prompts.ts"
+          ]
+        },
+        {
+          "id": "LLM-004",
+          "title": "OpenAI Client (Optional)",
+          "status": "pending",
+          "priority": "low",
+          "estimatedMinutes": 45,
+          "description": "OpenAI API fallback client",
+          "dependencies": ["LLM-002"],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/OpenAIClient.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PHASE-5",
+      "name": "Background Service",
+      "status": "pending"
+    },
+    {
+      "id": "PHASE-6",
+      "name": "Content Scripts",
+      "status": "pending"
+    },
+    {
+      "id": "PHASE-7",
+      "name": "Options Pages",
+      "status": "pending"
+    }
+  ]
+}
