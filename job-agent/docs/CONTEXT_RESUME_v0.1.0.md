@@ -1,20 +1,22 @@
-# AI Job Agent - Context Resume Document
-## Version: 0.1.0 | For: AI Development Sessions
+# Sift - Context Resume Document
+## Version: 0.3.0 | For: AI Development Sessions
 ## Last Updated: 2025-01-30
 
 ---
 
 ## 🎯 Quick Context (Read This First)
 
-**Project**: AI-powered Chrome extension for automating job applications
+**Project**: Sift - AI-powered Chrome extension for automating job applications
 
-**Current Status**: Planning complete, ready to start scaffolding
+**Tagline**: "Sift smarter. Apply faster."
+
+**Current Status**: Popup UI complete, ready for Storage Layer
 
 **Your Role**: Full-stack engineer building this step by step
 
 **Hardware**: MacBook M1 Pro, 16GB RAM
 
-**Next Action**: Execute task `SCAFFOLD-001` from TASK_CARDS.json
+**Next Action**: Execute task `STORAGE-001` from TASK_CARDS.json
 
 ---
 
@@ -47,14 +49,14 @@ When starting a new Claude session:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     Chrome Extension                             │
+│                     Chrome Extension (Sift)                      │
 ├─────────────────────────────────────────────────────────────────┤
-│  Popup UI          │  Content Scripts    │  Background Worker   │
+│  Popup UI ✅       │  Content Scripts    │  Background Worker   │
 │  - Stats           │  - Form detection   │  - Message routing   │
 │  - Profile switch  │  - Auto-fill        │  - Badge counter     │
 │  - Quick actions   │  - Generate UI      │  - Tab monitoring    │
 ├─────────────────────────────────────────────────────────────────┤
-│                        Storage Layer                             │
+│                     Storage Layer (NEXT)                         │
 │  ProfileStorage │ SettingsStorage │ JobStorage │ ResponseStorage │
 ├─────────────────────────────────────────────────────────────────┤
 │                         LLM Layer                                │
@@ -140,23 +142,31 @@ MVP scrapers (in order):
 
 ## 🚧 Current Development Phase
 
-### Phase: Scaffolding
-**Status**: Not started
-**Target**: Basic project structure that builds
+### Phase: Storage Layer
+**Status**: Starting
+**Target**: Persistent data management for profiles, settings, jobs
 
 ### Immediate Tasks (Next Session)
-1. `SCAFFOLD-001`: Initialize monorepo
-2. `SCAFFOLD-002`: Create extension package
-3. `SCAFFOLD-003`: Create manifest.json
-4. `SCAFFOLD-004`: Create shared types
-5. `SCAFFOLD-005`: Set up testing
-6. `SCAFFOLD-006`: Create icons
+1. `STORAGE-001`: Implement ProfileStorage class
+2. `STORAGE-002`: Implement SettingsStorage class  
+3. `STORAGE-003`: Implement JobStorage class
+4. `STORAGE-004`: Implement ResponseStorage class
 
 ### Success Criteria
-- [ ] `pnpm install` works
-- [ ] `pnpm build` produces dist
-- [ ] Extension loads in Chrome
-- [ ] Popup opens with placeholder UI
+- [ ] Profile CRUD operations work
+- [ ] Settings persist across sessions
+- [ ] Applied jobs tracked with URL deduplication
+- [ ] Saved responses stored for learning
+
+---
+
+## ✅ Completed Phases
+
+| Phase | Status | Key Outputs |
+|-------|--------|-------------|
+| Planning | ✅ | PRD, Module specs, Task cards |
+| Scaffolding | ✅ | Monorepo, Vite, Manifest V3 |
+| Popup UI | ✅ | Stats, profile switcher, actions |
 
 ---
 

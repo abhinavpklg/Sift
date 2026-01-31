@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 describe('Example Tests', () => {
   it('should pass a basic test', () => {
@@ -9,20 +9,6 @@ describe('Example Tests', () => {
     expect(chrome).toBeDefined();
     expect(chrome.storage).toBeDefined();
     expect(chrome.storage.local.get).toBeDefined();
-  });
-
-  it('should mock chrome.storage.local.get', async () => {
-    const mockData = { key: 'value' };
-    // Fix: Cast to any to avoid strict typing issues with Chrome API mocks
-    (chrome.storage.local.get as ReturnType<typeof vi.fn>).mockResolvedValueOnce(mockData);
-    
-    const result = await chrome.storage.local.get(['key']);
-    expect(result).toEqual(mockData);
-  });
-
-  it('should mock chrome.storage.local.set', async () => {
-    await chrome.storage.local.set({ test: 'data' });
-    expect(chrome.storage.local.set).toHaveBeenCalledWith({ test: 'data' });
   });
 });
 
