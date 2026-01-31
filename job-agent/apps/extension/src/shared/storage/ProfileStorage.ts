@@ -1,6 +1,12 @@
 import type { UserProfile } from '../types/profile';
 import { createEmptyProfile } from '../types/profile';
 
+export interface StorageUsage {
+  used: number;
+  total: number;
+  percentage: number;
+}
+
 const STORAGE_KEYS = {
   PROFILES: 'sift_profiles',
   ACTIVE_PROFILE_ID: 'sift_active_profile_id',
@@ -137,6 +143,49 @@ export class ProfileStorage {
       STORAGE_KEYS.ACTIVE_PROFILE_ID,
     ]);
   }
+
+  static async getStorageUsage(): Promise<StorageUsage> {
+    const data = await chrome.storage.local.get(null);
+    const used = new Blob([JSON.stringify(data)]).size;
+    const total = chrome.storage.local.QUOTA_BYTES || 10485760; // 10MB default
+
+    return {
+      used,
+      total,
+      percentage: Math.round((used / total) * 100),
+    };
+  }
+
+  /**
+   * Check if storage has any profiles
+   */
+  static async hasProfiles(): Promise<boolean> {
+    const count = await this.getCount();
+    return count > 0;
+  }
+
+  /**
+   * Get profile count
+   */
+  static async getCount(): Promise<number> {
+    const profiles = await this.getAll();
+    return profiles.length;
+  }
+
+  /**
+   * Search profiles by name
+   */
+  static async searchByName(query: string): Promise<UserProfile[]> {
+    const profiles = await this.getAll();
+    const lowerQuery = query.toLowerCase();
+    
+    return profiles.filter(p => 
+      p.name.toLowerCase().includes(lowerQuery) ||
+      p.personalInfo.firstName.toLowerCase().includes(lowerQuery) ||
+      p.personalInfo.lastName.toLowerCase().includes(lowerQuery)
+    );
+  }
+
 }
 
 export default ProfileStorage;
