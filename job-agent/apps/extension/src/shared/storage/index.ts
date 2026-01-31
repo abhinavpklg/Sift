@@ -1,5 +1,5 @@
 /**
- * Storage module exports
+ * Storage module exports - Complete Storage Layer
  */
 
 export { ProfileStorage } from './ProfileStorage';
@@ -11,5 +11,5 @@ export type { SettingsStorageEvents } from './SettingsStorage';
 export { JobStorage } from './JobStorage';
 export type { JobStorageEvents } from './JobStorage';
 
-// Future exports:
-// export { ResponseStorage } from './ResponseStorage';
+export { ResponseStorage } from './ResponseStorage';
+export type { ResponseStorageEvents } from './ResponseStorage';

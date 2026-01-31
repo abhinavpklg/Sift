@@ -1,5 +1,5 @@
 /**
- * Types module exports
+ * Types module exports - Complete Types
  */
 
 // Profile types
@@ -13,7 +13,7 @@ export type {
   LanguageProficiency,
   Documents,
   EmploymentInfo,
-  SavedResponse,
+  SavedResponse as ProfileSavedResponse,
 } from './profile';
 export { createEmptyProfile } from './profile';
 
@@ -46,5 +46,18 @@ export {
   createEmptyScrapedJob 
 } from './job';
 
-// Future exports:
-// export * from './messages';
+// Response types
+export type {
+  SavedResponse,
+  ResponseCategory,
+  ResponseSource,
+  ResponseFilter,
+  ResponseMatch,
+} from './response';
+export {
+  QUESTION_PATTERNS,
+  detectCategory,
+  extractKeywords,
+  normalizeQuestion,
+  calculateSimilarity,
+} from './response';
