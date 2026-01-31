@@ -29,6 +29,22 @@ export type {
 } from './settings';
 export { DEFAULT_SETTINGS, SETTINGS_VERSION, ATS_PLATFORMS } from './settings';
 
+// Job types
+export type {
+  ScrapedJob,
+  AppliedJob,
+  JobStatus,
+  ApplicationStatus,
+  JobFilter,
+  AppliedJobFilter,
+  JobStats,
+} from './job';
+export { 
+  generateUrlHash, 
+  normalizeJobUrl, 
+  getPostedAgo, 
+  createEmptyScrapedJob 
+} from './job';
+
 // Future exports:
-// export * from './job';
 // export * from './messages';
