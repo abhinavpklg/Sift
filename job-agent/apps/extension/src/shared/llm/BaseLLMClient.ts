@@ -11,10 +11,13 @@ export abstract class BaseLLMClient implements LLMClient {
 
   constructor(config: Partial<LLMConfig>) {
     this.config = {
-      provider: this.provider,
+      provider: 'ollama', // Will be overridden by subclass
       maxTokens: config.maxTokens ?? 1024,
       temperature: config.temperature ?? 0.7,
       timeout: config.timeout ?? 30000,
+      model: config.model ?? '',
+      endpoint: config.endpoint ?? '',
+      apiKey: config.apiKey,
       ...config,
     } as LLMConfig;
   }
@@ -46,7 +49,7 @@ export abstract class BaseLLMClient implements LLMClient {
   /**
    * Create standard error response
    */
-  protected createErrorResponse(error: unknown, startTime: number): never {
+  protected createErrorResponse(error: unknown, _startTime: number): never {
     const message = error instanceof Error ? error.message : 'Unknown error';
     throw new Error(`[${this.provider}] ${message}`);
   }

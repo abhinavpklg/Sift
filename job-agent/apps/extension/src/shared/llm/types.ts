@@ -92,7 +92,7 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
     requiresApiKey: true,
     defaultEndpoint: 'https://api.openai.com/v1',
     defaultModel: 'gpt-4o-mini',
-    freerier: false,
+    freetier: false,
     models: [
       { id: 'gpt-4o', name: 'GPT-4o', contextWindow: 128000 },
       { id: 'gpt-4o-mini', name: 'GPT-4o Mini', contextWindow: 128000 },
@@ -107,7 +107,7 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
     requiresApiKey: true,
     defaultEndpoint: 'https://api.anthropic.com',
     defaultModel: 'claude-3-5-sonnet-20241022',
-    freerier: false,
+    freetier: false,
     models: [
       { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet', contextWindow: 200000 },
       { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku', contextWindow: 200000 },
@@ -121,7 +121,7 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
     requiresApiKey: true,
     defaultEndpoint: 'https://generativelanguage.googleapis.com/v1beta',
     defaultModel: 'gemini-1.5-flash',
-    freerier: true,
+    freetier: true,
     models: [
       { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro', contextWindow: 1000000 },
       { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash', contextWindow: 1000000 },
@@ -135,7 +135,7 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
     requiresApiKey: true,
     defaultEndpoint: 'https://openrouter.ai/api/v1',
     defaultModel: 'meta-llama/llama-3.2-3b-instruct:free',
-    freerier: true,
+    freetier: true,
     models: [
       { id: 'meta-llama/llama-3.2-3b-instruct:free', name: 'Llama 3.2 3B (Free)', contextWindow: 8192 },
       { id: 'google/gemma-2-9b-it:free', name: 'Gemma 2 9B (Free)', contextWindow: 8192 },
@@ -151,7 +151,7 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
     requiresApiKey: true,
     defaultEndpoint: 'https://api.groq.com/openai/v1',
     defaultModel: 'llama-3.3-70b-versatile',
-    freerier: true,
+    freetier: true,
     models: [
       { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B', contextWindow: 128000 },
       { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B', contextWindow: 128000 },
