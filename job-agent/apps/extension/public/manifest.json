@@ -1,0 +1,95 @@
+{
+  "manifest_version": 3,
+  "name": "AI Job Agent",
+  "version": "0.1.0",
+  "description": "AI-powered job application assistant - auto-fill forms, track applications, and find jobs faster",
+  
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "notifications",
+    "alarms"
+  ],
+  
+  "host_permissions": [
+    "https://boards.greenhouse.io/*",
+    "https://jobs.greenhouse.io/*",
+    "https://job-boards.greenhouse.io/*",
+    "https://jobs.lever.co/*",
+    "https://*.lever.co/*",
+    "https://*.myworkdayjobs.com/*",
+    "https://*.myworkdaysite.com/*",
+    "https://*.icims.com/*",
+    "https://*.ashbyhq.com/*",
+    "https://jobs.ashbyhq.com/*",
+    "https://*.smartrecruiters.com/*",
+    "https://*.jobvite.com/*",
+    "https://*.bamboohr.com/*",
+    "https://*.breezy.hr/*",
+    "https://*.workable.com/*",
+    "http://localhost:11434/*",
+    "http://127.0.0.1:11434/*"
+  ],
+  
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  },
+  
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_title": "AI Job Agent",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  
+  "options_page": "src/options/index.html",
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "https://boards.greenhouse.io/*",
+        "https://jobs.greenhouse.io/*",
+        "https://job-boards.greenhouse.io/*"
+      ],
+      "js": ["src/content/index.ts"],
+      "css": ["src/styles/content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://jobs.lever.co/*",
+        "https://*.lever.co/*/apply*"
+      ],
+      "js": ["src/content/index.ts"],
+      "css": ["src/styles/content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.ashbyhq.com/*",
+        "https://jobs.ashbyhq.com/*"
+      ],
+      "js": ["src/content/index.ts"],
+      "css": ["src/styles/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
