@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "version": "0.2.0",
+    "version": "0.3.0",
     "lastUpdated": "2025-01-30",
     "totalTasks": 47,
-    "completedTasks": 6,
-    "currentPhase": "popup-ui"
+    "completedTasks": 12,
+    "currentPhase": "storage-layer"
   },
   "phases": [
     {
@@ -19,49 +19,33 @@
       "status": "complete",
       "completedDate": "2025-01-30",
       "tasks": [
-        {
-          "id": "SCAFFOLD-001",
-          "title": "Initialize Monorepo Structure",
-          "status": "complete",
-          "completedDate": "2025-01-30"
-        },
-        {
-          "id": "SCAFFOLD-002",
-          "title": "Create Extension Package Structure",
-          "status": "complete",
-          "completedDate": "2025-01-30"
-        },
-        {
-          "id": "SCAFFOLD-003",
-          "title": "Create Manifest V3 Configuration",
-          "status": "complete",
-          "completedDate": "2025-01-30"
-        },
-        {
-          "id": "SCAFFOLD-004",
-          "title": "Create Shared Types Package",
-          "status": "complete",
-          "completedDate": "2025-01-30"
-        },
-        {
-          "id": "SCAFFOLD-005",
-          "title": "Set Up Testing Framework",
-          "status": "complete",
-          "completedDate": "2025-01-30"
-        },
-        {
-          "id": "SCAFFOLD-006",
-          "title": "Create Extension Icons",
-          "status": "complete",
-          "completedDate": "2025-01-30"
-        }
+        { "id": "SCAFFOLD-001", "title": "Initialize Monorepo Structure", "status": "complete" },
+        { "id": "SCAFFOLD-002", "title": "Create Extension Package Structure", "status": "complete" },
+        { "id": "SCAFFOLD-003", "title": "Create Manifest V3 Configuration", "status": "complete" },
+        { "id": "SCAFFOLD-004", "title": "Create Shared Types Package", "status": "complete" },
+        { "id": "SCAFFOLD-005", "title": "Set Up Testing Framework", "status": "complete" },
+        { "id": "SCAFFOLD-006", "title": "Create Extension Icons", "status": "complete" }
       ]
     },
     {
       "id": "PHASE-2",
       "name": "Module 1 - Popup UI",
+      "status": "complete",
+      "completedDate": "2025-01-30",
+      "tasks": [
+        { "id": "POPUP-001", "title": "Create Basic Popup Layout", "status": "complete" },
+        { "id": "POPUP-002", "title": "Create Stats Component", "status": "complete" },
+        { "id": "POPUP-003", "title": "Create Profile Switcher Component", "status": "complete" },
+        { "id": "POPUP-004", "title": "Create Quick Actions Component", "status": "complete" },
+        { "id": "POPUP-005", "title": "Create LLM Status Indicator", "status": "complete" },
+        { "id": "REBRAND-001", "title": "Rebrand to Sift", "status": "complete" }
+      ]
+    },
+    {
+      "id": "PHASE-3",
+      "name": "Module 1 - Storage Layer",
       "status": "in-progress",
-      "estimatedDays": 5,
+      "estimatedDays": 3,
       "tasks": [
         {
           "id": "POPUP-001",

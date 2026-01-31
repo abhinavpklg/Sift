@@ -1,5 +1,5 @@
-# AI Job Agent - Project State Document
-## Version: 0.2.0 | Phase: Scaffolding Complete
+# Sift - Project State Document
+## Version: 0.3.0 | Phase: Storage Layer
 ## Last Updated: 2025-01-30
 
 ---
@@ -7,9 +7,9 @@
 ## 📍 Current Position
 
 ```
-Planning ✅ → Scaffolding ✅ → [Module 1 - Popup] → Module 1 - Storage → ... → Release
-                                      ↑
-                                YOU ARE HERE
+Planning ✅ → Scaffolding ✅ → Popup UI ✅ → [Storage Layer] → LLM → Content Scripts → Release
+                                                   ↑
+                                              YOU ARE HERE
 ```
 
 ## 🎯 Project Summary
@@ -49,7 +49,18 @@ Planning ✅ → Scaffolding ✅ → [Module 1 - Popup] → Module 1 - Storage �
 | SCAFFOLD-003: Manifest V3 | ✅ Done | manifest.json, entry points |
 | SCAFFOLD-004: Shared types | ✅ Done | Profile, Settings, Job, Message types |
 | SCAFFOLD-005: Testing | ✅ Done | Vitest configured with Chrome mocks |
-| SCAFFOLD-006: Icons | ✅ Done | SVG icons created |
+| SCAFFOLD-006: Icons | ✅ Done | PNG icons created |
+
+### Phase 2: Popup UI (COMPLETE)
+
+| Task | Status | Output |
+|------|--------|--------|
+| POPUP-001: Basic layout | ✅ Done | Header, card layout, footer |
+| POPUP-002: Stats component | ✅ Done | Progress bar, daily goal |
+| POPUP-003: Profile switcher | ✅ Done | Dropdown selector |
+| POPUP-004: Quick actions | ✅ Done | Fill Form, Start Sifting buttons |
+| POPUP-005: LLM status | ✅ Done | Connection indicator |
+| Rebrand to "Sift" | ✅ Done | Name, tagline, UI updated |
 
 ### Key Decisions Made
 
@@ -61,27 +72,25 @@ Planning ✅ → Scaffolding ✅ → [Module 1 - Popup] → Module 1 - Storage �
 
 ---
 
-## 🔄 Current Phase: Module 1 - Popup UI
+## 🔄 Current Phase: Module 1 - Storage Layer
 
 ### Objectives
-1. Build the popup UI components
-2. Implement stats display with daily goal
-3. Add profile switcher
-4. Create quick action buttons
-5. Show LLM connection status
+1. Implement ProfileStorage class for CRUD operations
+2. Implement SettingsStorage for user preferences
+3. Implement JobStorage for tracking applications
+4. Implement ResponseStorage for learning from user inputs
 
 ### Prerequisites
 - [x] Project scaffolded
-- [x] Dependencies defined
-- [ ] `pnpm install` completed
-- [ ] Extension loads in Chrome
+- [x] Extension loads in Chrome
+- [x] Popup UI working
+- [x] Options page working
 
-### Next Tasks (POPUP-001 → POPUP-005)
-1. `POPUP-001`: Create basic popup layout ← **START HERE**
-2. `POPUP-002`: Add stats component
-3. `POPUP-003`: Create profile switcher
-4. `POPUP-004`: Create quick actions
-5. `POPUP-005`: Add LLM status indicator
+### Next Tasks (STORAGE-001 → STORAGE-004)
+1. `STORAGE-001`: Implement ProfileStorage class ← **START HERE**
+2. `STORAGE-002`: Implement SettingsStorage class
+3. `STORAGE-003`: Implement JobStorage class
+4. `STORAGE-004`: Implement ResponseStorage class
 
 ---
 
@@ -135,8 +144,10 @@ ollama --version    # Need: latest | Status: [ ] (setup when needed)
 | PRD Completion | 100% | 100% |
 | Module 1 Spec | 100% | 100% |
 | Scaffolding | 100% | 100% |
-| Popup UI | 0% | - |
+| Popup UI | 100% | 100% |
 | Storage Layer | 0% | - |
+| LLM Integration | 0% | - |
+| Content Scripts | 0% | - |
 | Tests Written | 1 | - |
 | ATS Scrapers | 0/65 | 6 (MVP) |
 
@@ -164,6 +175,7 @@ ollama --version    # Need: latest | Status: [ ] (setup when needed)
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 0.3.0 | 2025-01-30 | Popup UI complete, rebranded to Sift |
 | 0.2.0 | 2025-01-30 | Scaffolding complete |
 | 0.1.0 | 2025-01-30 | Initial planning complete |
 
