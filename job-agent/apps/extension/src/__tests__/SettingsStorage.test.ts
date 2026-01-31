@@ -1,26 +1,61 @@
+/**
+ * SettingsStorage Unit Tests
+ * STORAGE-002: Test suite for settings operations
+ */
+
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { SettingsStorage } from '../shared/storage/SettingsStorage';
 import { DEFAULT_SETTINGS } from '../shared/types/settings';
 
-let mockStorage: Record<string, unknown> = {};
+// Mock Chrome Storage API
+const mockStorage: Record<string, unknown> = {};
 
-beforeEach(() => {
-  mockStorage = {};
-  
-  vi.mocked(chrome.storage.local.get).mockImplementation(async (keys) => {
-    if (typeof keys === 'string') return { [keys]: mockStorage[keys] };
-    return mockStorage;
-  });
+const mockChromeStorage = {
+  local: {
+    get: vi.fn((keys) => {
+      if (typeof keys === 'string') {
+        return Promise.resolve({ [keys]: mockStorage[keys] });
+      }
+      if (Array.isArray(keys)) {
+        const result: Record<string, unknown> = {};
+        keys.forEach(k => { result[k] = mockStorage[k]; });
+        return Promise.resolve(result);
+      }
+      return Promise.resolve(mockStorage);
+    }),
+    set: vi.fn((items) => {
+      Object.assign(mockStorage, items);
+      return Promise.resolve();
+    }),
+    remove: vi.fn((keys) => {
+      const keysArray = Array.isArray(keys) ? keys : [keys];
+      keysArray.forEach(k => delete mockStorage[k]);
+      return Promise.resolve();
+    }),
+  },
+  onChanged: {
+    addListener: vi.fn(),
+  },
+};
 
-  vi.mocked(chrome.storage.local.set).mockImplementation(async (items) => {
-    Object.assign(mockStorage, items);
-  });
+// @ts-expect-error - Mock chrome global
+global.chrome = { storage: mockChromeStorage };
+
+// Mock crypto.randomUUID
+vi.stubGlobal('crypto', {
+  randomUUID: () => `test-uuid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
 });
 
 describe('SettingsStorage', () => {
+  beforeEach(() => {
+    Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+    vi.clearAllMocks();
+  });
+
   describe('getAll', () => {
-    it('should return defaults when no settings stored', async () => {
+    it('should return default settings when none exist', async () => {
       const settings = await SettingsStorage.getAll();
+      
       expect(settings.general.dailyGoal).toBe(DEFAULT_SETTINGS.general.dailyGoal);
       expect(settings.llm.provider).toBe('ollama');
     });
@@ -29,132 +64,188 @@ describe('SettingsStorage', () => {
       mockStorage['sift_settings'] = {
         general: { dailyGoal: 20 },
       };
-      
+
       const settings = await SettingsStorage.getAll();
+      
       expect(settings.general.dailyGoal).toBe(20);
-      expect(settings.general.autoSubmit).toBe(false);
+      expect(settings.general.autoSubmit).toBe(DEFAULT_SETTINGS.general.autoSubmit);
     });
   });
 
   describe('update', () => {
     it('should update partial settings', async () => {
-      await SettingsStorage.update({
-        general: { dailyGoal: 15 },
+      const settings = await SettingsStorage.update({
+        general: { dailyGoal: 25 },
       });
 
-      const settings = await SettingsStorage.getAll();
-      expect(settings.general.dailyGoal).toBe(15);
+      expect(settings.general.dailyGoal).toBe(25);
       expect(settings.general.autoSubmit).toBe(false);
+    });
+
+    it('should preserve unmodified sections', async () => {
+      await SettingsStorage.update({ general: { dailyGoal: 15 } });
+      const settings = await SettingsStorage.update({ 
+        llm: { provider: 'openai' } 
+      });
+
+      expect(settings.general.dailyGoal).toBe(15);
+      expect(settings.llm.provider).toBe('openai');
     });
   });
 
   describe('reset', () => {
-    it('should reset to defaults', async () => {
+    it('should reset all settings to defaults', async () => {
       await SettingsStorage.update({ general: { dailyGoal: 50 } });
-      await SettingsStorage.reset();
-      
-      const settings = await SettingsStorage.getAll();
-      expect(settings.general.dailyGoal).toBe(10);
+      const settings = await SettingsStorage.reset();
+
+      expect(settings.general.dailyGoal).toBe(DEFAULT_SETTINGS.general.dailyGoal);
     });
   });
 
   describe('General Settings', () => {
-    it('should set daily goal with bounds', async () => {
-      await SettingsStorage.setDailyGoal(150);
-      let settings = await SettingsStorage.getAll();
-      expect(settings.general.dailyGoal).toBe(100);
+    it('should get general settings', async () => {
+      const general = await SettingsStorage.getGeneral();
+      expect(general.dailyGoal).toBe(10);
+    });
 
-      await SettingsStorage.setDailyGoal(0);
-      settings = await SettingsStorage.getAll();
-      expect(settings.general.dailyGoal).toBe(1);
+    it('should update daily goal with validation', async () => {
+      await SettingsStorage.setDailyGoal(150); // Over max
+      let general = await SettingsStorage.getGeneral();
+      expect(general.dailyGoal).toBe(100); // Capped at max
+
+      await SettingsStorage.setDailyGoal(-5); // Under min
+      general = await SettingsStorage.getGeneral();
+      expect(general.dailyGoal).toBe(1); // Minimum 1
     });
 
     it('should toggle auto submit', async () => {
-      await SettingsStorage.setAutoSubmit(true);
-      const settings = await SettingsStorage.getAll();
-      expect(settings.general.autoSubmit).toBe(true);
-    });
+      const result1 = await SettingsStorage.toggleAutoSubmit();
+      expect(result1).toBe(true);
 
-    it('should set dark mode', async () => {
-      await SettingsStorage.setDarkMode('dark');
-      const settings = await SettingsStorage.getAll();
-      expect(settings.general.darkMode).toBe('dark');
+      const result2 = await SettingsStorage.toggleAutoSubmit();
+      expect(result2).toBe(false);
     });
   });
 
   describe('Scraping Settings', () => {
-    it('should set time filter with bounds', async () => {
-      await SettingsStorage.setTimeFilter(200);
-      const settings = await SettingsStorage.getAll();
-      expect(settings.scraping.timeFilterHours).toBe(168);
+    it('should get scraping settings', async () => {
+      const scraping = await SettingsStorage.getScraping();
+      expect(scraping.timeFilterHours).toBe(24);
     });
 
-    it('should toggle platforms', async () => {
-      await SettingsStorage.togglePlatform('taleo', true);
-      let settings = await SettingsStorage.getAll();
-      expect(settings.scraping.enabledPlatforms).toContain('taleo');
+    it('should enable/disable platforms', async () => {
+      await SettingsStorage.disablePlatform('greenhouse.io');
+      let enabled = await SettingsStorage.isPlatformEnabled('greenhouse.io');
+      expect(enabled).toBe(false);
 
-      await SettingsStorage.togglePlatform('taleo', false);
-      settings = await SettingsStorage.getAll();
-      expect(settings.scraping.enabledPlatforms).not.toContain('taleo');
+      await SettingsStorage.enablePlatform('greenhouse.io');
+      enabled = await SettingsStorage.isPlatformEnabled('greenhouse.io');
+      expect(enabled).toBe(true);
+    });
+
+    it('should toggle platform', async () => {
+      const wasEnabled = await SettingsStorage.isPlatformEnabled('lever.co');
+      const newState = await SettingsStorage.togglePlatform('lever.co');
+      expect(newState).toBe(!wasEnabled);
+    });
+
+    it('should validate time filter', async () => {
+      await SettingsStorage.setTimeFilter(200); // Over max
+      let scraping = await SettingsStorage.getScraping();
+      expect(scraping.timeFilterHours).toBe(168); // Capped at 1 week
+
+      await SettingsStorage.setTimeFilter(0); // Under min
+      scraping = await SettingsStorage.getScraping();
+      expect(scraping.timeFilterHours).toBe(1); // Minimum 1
     });
   });
 
   describe('LLM Settings', () => {
-    it('should set LLM provider with defaults', async () => {
-      await SettingsStorage.setLLMProvider('openai', undefined, undefined, 'sk-test');
-      
-      const settings = await SettingsStorage.getAll();
-      expect(settings.llm.provider).toBe('openai');
-      expect(settings.llm.endpoint).toBe('https://api.openai.com/v1');
-      expect(settings.llm.apiKey).toBe('sk-test');
+    it('should get LLM settings', async () => {
+      const llm = await SettingsStorage.getLLM();
+      expect(llm.provider).toBe('ollama');
+      expect(llm.endpoint).toBe('http://localhost:11434');
     });
 
-    it('should update LLM settings', async () => {
-      await SettingsStorage.updateLLM({ temperature: 0.5 });
+    it('should set LLM provider with defaults', async () => {
+      await SettingsStorage.setLLMProvider('openai');
+      const llm = await SettingsStorage.getLLM();
       
-      const settings = await SettingsStorage.getAll();
-      expect(settings.llm.temperature).toBe(0.5);
+      expect(llm.provider).toBe('openai');
+      expect(llm.endpoint).toBe('https://api.openai.com/v1');
+    });
+
+    it('should set custom endpoint', async () => {
+      await SettingsStorage.setLLMProvider('custom', 'http://my-server:8080');
+      const llm = await SettingsStorage.getLLM();
+      
+      expect(llm.provider).toBe('custom');
+      expect(llm.endpoint).toBe('http://my-server:8080');
     });
   });
 
   describe('Credentials', () => {
     it('should save and retrieve credentials', async () => {
-      await SettingsStorage.saveCredential('workday.com', 'user@test.com', 'password123');
+      await SettingsStorage.saveCredential('workday.com', 'user@test.com', 'secret123');
       
-      const cred = await SettingsStorage.getCredentialForDomain('workday.com');
-      expect(cred).not.toBeNull();
-      expect(cred?.username).toBe('user@test.com');
-    });
-
-    it('should decrypt password', async () => {
-      await SettingsStorage.saveCredential('lever.co', 'user', 'mypassword');
+      const credential = await SettingsStorage.getCredentialForDomain('workday.com');
       
-      const cred = await SettingsStorage.getCredentialForDomain('lever.co');
-      const password = SettingsStorage.decryptPassword(cred!.encryptedPassword);
-      expect(password).toBe('mypassword');
+      expect(credential).not.toBeNull();
+      expect(credential?.username).toBe('user@test.com');
     });
 
     it('should update existing credential', async () => {
-      // Use unique domain for this test
-      await SettingsStorage.saveCredential('unique-test.com', 'old@test.com', 'old');
-      await SettingsStorage.saveCredential('unique-test.com', 'new@test.com', 'new');
+      await SettingsStorage.saveCredential('workday.com', 'old@test.com', 'old');
+      await SettingsStorage.saveCredential('workday.com', 'new@test.com', 'new');
       
-      const cred = await SettingsStorage.getCredentialForDomain('unique-test.com');
-      expect(cred?.username).toBe('new@test.com');
-      
-      // Verify only one credential for this domain
-      const allCreds = await SettingsStorage.getCredentials();
-      const matchingCreds = allCreds.filter(c => c.domain === 'unique-test.com');
-      expect(matchingCreds).toHaveLength(1);
+      const credentials = await SettingsStorage.getCredentials();
+      expect(credentials).toHaveLength(1);
+      expect(credentials[0].username).toBe('new@test.com');
     });
 
     it('should delete credential', async () => {
-      await SettingsStorage.saveCredential('delete.com', 'user', 'pass');
-      await SettingsStorage.deleteCredential('delete.com');
+      await SettingsStorage.saveCredential('test.com', 'user', 'pass');
+      const deleted = await SettingsStorage.deleteCredential('test.com');
       
-      const cred = await SettingsStorage.getCredentialForDomain('delete.com');
-      expect(cred).toBeNull();
+      expect(deleted).toBe(true);
+      
+      const credential = await SettingsStorage.getCredentialForDomain('test.com');
+      expect(credential).toBeNull();
+    });
+
+    it('should encrypt and decrypt password', async () => {
+      await SettingsStorage.saveCredential('test.com', 'user', 'mypassword');
+      
+      const credential = await SettingsStorage.getCredentialForDomain('test.com');
+      const decrypted = SettingsStorage.decryptPassword(credential!.encryptedPassword);
+      
+      expect(decrypted).toBe('mypassword');
+    });
+  });
+
+  describe('Export/Import', () => {
+    it('should export settings without sensitive data', async () => {
+      await SettingsStorage.saveCredential('test.com', 'user', 'secret');
+      await SettingsStorage.updateLLM({ apiKey: 'sk-secret-key' });
+      
+      const exported = await SettingsStorage.export();
+      const parsed = JSON.parse(exported);
+      
+      expect(parsed.credentials).toHaveLength(0);
+      expect(parsed.llm.apiKey).toBeUndefined();
+    });
+
+    it('should import settings and preserve credentials', async () => {
+      await SettingsStorage.saveCredential('test.com', 'user', 'secret');
+      
+      const importData = JSON.stringify({
+        general: { dailyGoal: 30 },
+      });
+      
+      const settings = await SettingsStorage.import(importData);
+      
+      expect(settings.general.dailyGoal).toBe(30);
+      expect(settings.credentials).toHaveLength(1);
     });
   });
 });

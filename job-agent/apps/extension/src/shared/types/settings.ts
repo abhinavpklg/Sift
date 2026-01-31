@@ -1,5 +1,6 @@
 /**
- * Settings Types for Sift
+ * Settings Types for Sift Chrome Extension
+ * STORAGE-002: Type definitions for user settings
  */
 
 export interface UserSettings {
@@ -14,10 +15,10 @@ export interface GeneralSettings {
   autoSubmit: boolean;
   autoNextPage: boolean;
   notificationSound: boolean;
-  darkMode: ThemeMode;
+  darkMode: 'light' | 'dark' | 'system';
+  showAppliedBadge: boolean;
+  confirmBeforeSubmit: boolean;
 }
-
-export type ThemeMode = 'light' | 'dark' | 'system';
 
 export interface ScrapingSettings {
   maxJobsPerSession: number;
@@ -25,18 +26,19 @@ export interface ScrapingSettings {
   requestDelayMin: number;
   requestDelayMax: number;
   enabledPlatforms: string[];
+  autoStartScraping: boolean;
+  pauseOnRateLimit: boolean;
 }
 
 export interface LLMSettings {
-  provider: LLMProvider;
+  provider: 'ollama' | 'openai' | 'anthropic' | 'custom';
   endpoint: string;
   model: string;
   apiKey?: string;
   maxTokens: number;
   temperature: number;
+  timeout: number;
 }
-
-export type LLMProvider = 'ollama' | 'openai' | 'anthropic' | 'custom';
 
 export interface EncryptedCredential {
   id: string;
@@ -48,7 +50,7 @@ export interface EncryptedCredential {
 }
 
 /**
- * Default settings
+ * Default settings values
  */
 export const DEFAULT_SETTINGS: UserSettings = {
   general: {
@@ -57,6 +59,8 @@ export const DEFAULT_SETTINGS: UserSettings = {
     autoNextPage: false,
     notificationSound: true,
     darkMode: 'system',
+    showAppliedBadge: true,
+    confirmBeforeSubmit: true,
   },
   scraping: {
     maxJobsPerSession: 50,
@@ -64,13 +68,15 @@ export const DEFAULT_SETTINGS: UserSettings = {
     requestDelayMin: 3,
     requestDelayMax: 7,
     enabledPlatforms: [
-      'greenhouse',
-      'lever',
-      'ashby',
-      'smartrecruiters',
-      'workday',
-      'icims',
+      'greenhouse.io',
+      'lever.co',
+      'ashbyhq.com',
+      'smartrecruiters.com',
+      'myworkdayjobs.com',
+      'icims.com',
     ],
+    autoStartScraping: false,
+    pauseOnRateLimit: true,
   },
   llm: {
     provider: 'ollama',
@@ -78,43 +84,42 @@ export const DEFAULT_SETTINGS: UserSettings = {
     model: 'llama3.2:8b-instruct-q4_K_M',
     maxTokens: 1024,
     temperature: 0.7,
+    timeout: 30000,
   },
   credentials: [],
 };
 
 /**
- * ATS Platform definitions
+ * Settings version for migrations
  */
-export interface ATSPlatform {
-  id: string;
-  name: string;
-  domain: string;
-  category: ATSCategory;
-  enabled: boolean;
-}
+export const SETTINGS_VERSION = 1;
 
-export type ATSCategory = 
-  | 'enterprise' 
-  | 'mid_market' 
-  | 'smb' 
-  | 'technical' 
-  | 'staffing' 
-  | 'ai_powered';
+/**
+ * Partial settings update type
+ */
+export type SettingsUpdate = {
+  general?: Partial<GeneralSettings>;
+  scraping?: Partial<ScrapingSettings>;
+  llm?: Partial<LLMSettings>;
+  credentials?: EncryptedCredential[];
+};
 
-export const ATS_PLATFORMS: ATSPlatform[] = [
-  // Enterprise
-  { id: 'workday', name: 'Workday', domain: 'myworkdayjobs.com', category: 'enterprise', enabled: true },
-  { id: 'icims', name: 'iCIMS', domain: 'icims.com', category: 'enterprise', enabled: true },
-  { id: 'taleo', name: 'Oracle Taleo', domain: 'taleo.net', category: 'enterprise', enabled: false },
-  { id: 'successfactors', name: 'SAP SuccessFactors', domain: 'successfactors.com', category: 'enterprise', enabled: false },
-  
-  // Mid-Market
-  { id: 'greenhouse', name: 'Greenhouse', domain: 'greenhouse.io', category: 'mid_market', enabled: true },
-  { id: 'lever', name: 'Lever', domain: 'lever.co', category: 'mid_market', enabled: true },
-  { id: 'ashby', name: 'Ashby', domain: 'ashbyhq.com', category: 'mid_market', enabled: true },
-  { id: 'smartrecruiters', name: 'SmartRecruiters', domain: 'smartrecruiters.com', category: 'mid_market', enabled: true },
-  { id: 'jobvite', name: 'Jobvite', domain: 'jobvite.com', category: 'mid_market', enabled: false },
-  { id: 'bamboohr', name: 'BambooHR', domain: 'bamboohr.com', category: 'mid_market', enabled: false },
-  { id: 'workable', name: 'Workable', domain: 'workable.com', category: 'mid_market', enabled: false },
-  { id: 'breezy', name: 'Breezy HR', domain: 'breezy.hr', category: 'mid_market', enabled: false },
-];
+/**
+ * Available ATS platforms
+ */
+export const ATS_PLATFORMS = [
+  { id: 'greenhouse.io', name: 'Greenhouse', category: 'mid-market' },
+  { id: 'lever.co', name: 'Lever', category: 'mid-market' },
+  { id: 'ashbyhq.com', name: 'Ashby', category: 'mid-market' },
+  { id: 'smartrecruiters.com', name: 'SmartRecruiters', category: 'mid-market' },
+  { id: 'myworkdayjobs.com', name: 'Workday', category: 'enterprise' },
+  { id: 'icims.com', name: 'iCIMS', category: 'enterprise' },
+  { id: 'jobvite.com', name: 'Jobvite', category: 'mid-market' },
+  { id: 'bamboohr.com', name: 'BambooHR', category: 'mid-market' },
+  { id: 'workable.com', name: 'Workable', category: 'mid-market' },
+  { id: 'taleo.net', name: 'Oracle Taleo', category: 'enterprise' },
+  { id: 'successfactors.com', name: 'SAP SuccessFactors', category: 'enterprise' },
+  { id: 'brassring.com', name: 'BrassRing', category: 'enterprise' },
+] as const;
+
+export type ATSPlatformId = typeof ATS_PLATFORMS[number]['id'];
