@@ -1,0 +1,704 @@
+{
+  "metadata": {
+    "version": "0.2.0",
+    "lastUpdated": "2025-01-30",
+    "totalTasks": 47,
+    "completedTasks": 6,
+    "currentPhase": "popup-ui"
+  },
+  "phases": [
+    {
+      "id": "PHASE-0",
+      "name": "Planning & Architecture",
+      "status": "complete",
+      "tasks": []
+    },
+    {
+      "id": "PHASE-1",
+      "name": "Project Scaffolding",
+      "status": "complete",
+      "completedDate": "2025-01-30",
+      "tasks": [
+        {
+          "id": "SCAFFOLD-001",
+          "title": "Initialize Monorepo Structure",
+          "status": "complete",
+          "completedDate": "2025-01-30"
+        },
+        {
+          "id": "SCAFFOLD-002",
+          "title": "Create Extension Package Structure",
+          "status": "complete",
+          "completedDate": "2025-01-30"
+        },
+        {
+          "id": "SCAFFOLD-003",
+          "title": "Create Manifest V3 Configuration",
+          "status": "complete",
+          "completedDate": "2025-01-30"
+        },
+        {
+          "id": "SCAFFOLD-004",
+          "title": "Create Shared Types Package",
+          "status": "complete",
+          "completedDate": "2025-01-30"
+        },
+        {
+          "id": "SCAFFOLD-005",
+          "title": "Set Up Testing Framework",
+          "status": "complete",
+          "completedDate": "2025-01-30"
+        },
+        {
+          "id": "SCAFFOLD-006",
+          "title": "Create Extension Icons",
+          "status": "complete",
+          "completedDate": "2025-01-30"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-2",
+      "name": "Module 1 - Popup UI",
+      "status": "in-progress",
+      "estimatedDays": 5,
+      "tasks": [
+        {
+          "id": "POPUP-001",
+          "title": "Create Basic Popup Layout",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 45,
+          "description": "Build the main popup component with header and sections",
+          "acceptanceCriteria": [
+            "Popup opens when clicking extension icon",
+            "Header with logo and title",
+            "Clean layout with Tailwind CSS",
+            "Dark/light mode support"
+          ],
+          "dependencies": ["SCAFFOLD-003"],
+          "outputFiles": [
+            "apps/extension/src/popup/App.tsx",
+            "apps/extension/src/popup/index.tsx",
+            "apps/extension/src/popup/index.html"
+          ],
+          "verification": "Popup displays correctly in Chrome"
+        },
+        {
+          "id": "POPUP-002",
+          "title": "Create Stats Component",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 30,
+          "description": "Build the daily applications counter with goal tracking",
+          "acceptanceCriteria": [
+            "Shows today's application count",
+            "Shows daily goal",
+            "Progress bar visualization",
+            "Updates in real-time"
+          ],
+          "dependencies": ["POPUP-001"],
+          "outputFiles": [
+            "apps/extension/src/popup/components/Stats.tsx"
+          ],
+          "verification": "Stats display and update correctly"
+        },
+        {
+          "id": "POPUP-003",
+          "title": "Create Profile Switcher Component",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 30,
+          "description": "Build dropdown to switch between profiles",
+          "acceptanceCriteria": [
+            "Dropdown lists all profiles",
+            "Shows active profile",
+            "Can switch profiles",
+            "Link to create new profile"
+          ],
+          "dependencies": ["POPUP-001", "STORAGE-001"],
+          "outputFiles": [
+            "apps/extension/src/popup/components/ProfileSwitcher.tsx"
+          ],
+          "verification": "Profile switching works correctly"
+        },
+        {
+          "id": "POPUP-004",
+          "title": "Create Quick Actions Component",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 30,
+          "description": "Build buttons for Fill Form, Start Scraping, etc.",
+          "acceptanceCriteria": [
+            "Fill Form button",
+            "Start/Stop Scraping toggle",
+            "Open Dashboard button",
+            "Settings button"
+          ],
+          "dependencies": ["POPUP-001"],
+          "outputFiles": [
+            "apps/extension/src/popup/components/QuickActions.tsx"
+          ],
+          "verification": "Buttons render and are clickable"
+        },
+        {
+          "id": "POPUP-005",
+          "title": "Create LLM Status Indicator",
+          "status": "pending",
+          "priority": "medium",
+          "estimatedMinutes": 20,
+          "description": "Show connection status to Ollama/LLM provider",
+          "acceptanceCriteria": [
+            "Green indicator when connected",
+            "Red indicator when disconnected",
+            "Shows provider name",
+            "Click to configure"
+          ],
+          "dependencies": ["POPUP-001", "LLM-001"],
+          "outputFiles": [
+            "apps/extension/src/popup/components/LLMStatus.tsx"
+          ],
+          "verification": "Status reflects actual Ollama connection"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-3",
+      "name": "Module 1 - Storage Layer",
+      "status": "pending",
+      "estimatedDays": 3,
+      "tasks": [
+        {
+          "id": "STORAGE-001",
+          "title": "Implement ProfileStorage Class",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 60,
+          "description": "Create the profile storage layer using Chrome Storage API",
+          "acceptanceCriteria": [
+            "CRUD operations for profiles",
+            "Active profile management",
+            "Export/Import functionality",
+            "Storage quota handling"
+          ],
+          "dependencies": ["SCAFFOLD-004"],
+          "outputFiles": [
+            "apps/extension/src/shared/storage/ProfileStorage.ts"
+          ],
+          "verification": "All storage operations work correctly",
+          "testFile": "apps/extension/src/__tests__/ProfileStorage.test.ts"
+        },
+        {
+          "id": "STORAGE-002",
+          "title": "Implement SettingsStorage Class",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "Create settings storage with defaults",
+          "acceptanceCriteria": [
+            "Get/Set settings",
+            "Default values handling",
+            "Migration support for updates",
+            "Sync vs local storage choice"
+          ],
+          "dependencies": ["SCAFFOLD-004"],
+          "outputFiles": [
+            "apps/extension/src/shared/storage/SettingsStorage.ts"
+          ],
+          "verification": "Settings persist across sessions"
+        },
+        {
+          "id": "STORAGE-003",
+          "title": "Implement JobStorage Class",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "Create storage for scraped and applied jobs",
+          "acceptanceCriteria": [
+            "Store scraped jobs",
+            "Store applied jobs with date",
+            "URL hash for duplicate detection",
+            "Query by status/date"
+          ],
+          "dependencies": ["SCAFFOLD-004"],
+          "outputFiles": [
+            "apps/extension/src/shared/storage/JobStorage.ts"
+          ],
+          "verification": "Jobs stored and retrieved correctly"
+        },
+        {
+          "id": "STORAGE-004",
+          "title": "Implement ResponseStorage Class",
+          "status": "pending",
+          "priority": "medium",
+          "estimatedMinutes": 30,
+          "description": "Store saved responses for learning",
+          "acceptanceCriteria": [
+            "Store question-response pairs",
+            "Keyword indexing",
+            "Usage tracking",
+            "Search by keyword"
+          ],
+          "dependencies": ["SCAFFOLD-004"],
+          "outputFiles": [
+            "apps/extension/src/shared/storage/ResponseStorage.ts"
+          ],
+          "verification": "Responses saved and searchable"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-4",
+      "name": "Module 1 - LLM Integration",
+      "status": "pending",
+      "estimatedDays": 3,
+      "tasks": [
+        {
+          "id": "LLM-001",
+          "title": "Implement OllamaClient",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 60,
+          "description": "Create Ollama API client with all required methods",
+          "acceptanceCriteria": [
+            "Health check endpoint",
+            "List models endpoint",
+            "Generate text endpoint",
+            "Configurable endpoint URL",
+            "Error handling"
+          ],
+          "dependencies": ["SCAFFOLD-004"],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/OllamaClient.ts"
+          ],
+          "verification": "Client connects to local Ollama and generates text"
+        },
+        {
+          "id": "LLM-002",
+          "title": "Implement LLMRouter",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "Create router to switch between LLM providers",
+          "acceptanceCriteria": [
+            "Provider selection logic",
+            "Unified interface",
+            "Fallback handling",
+            "Configuration from settings"
+          ],
+          "dependencies": ["LLM-001"],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/LLMRouter.ts"
+          ],
+          "verification": "Router correctly delegates to configured provider"
+        },
+        {
+          "id": "LLM-003",
+          "title": "Create Prompt Templates",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "Define prompt templates for various tasks",
+          "acceptanceCriteria": [
+            "Field matching prompt",
+            "Response generation prompt",
+            "Job summary prompt",
+            "Skills extraction prompt",
+            "Template interpolation"
+          ],
+          "dependencies": ["LLM-001"],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/prompts.ts"
+          ],
+          "verification": "Templates produce expected outputs"
+        },
+        {
+          "id": "LLM-004",
+          "title": "Add OpenAI Client (Optional)",
+          "status": "pending",
+          "priority": "low",
+          "estimatedMinutes": 45,
+          "description": "Add OpenAI API support as fallback",
+          "acceptanceCriteria": [
+            "API key configuration",
+            "Chat completions endpoint",
+            "Compatible interface with OllamaClient"
+          ],
+          "dependencies": ["LLM-002"],
+          "outputFiles": [
+            "apps/extension/src/shared/llm/OpenAIClient.ts"
+          ],
+          "verification": "OpenAI generates responses when configured"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-5",
+      "name": "Module 1 - Background Service",
+      "status": "pending",
+      "estimatedDays": 2,
+      "tasks": [
+        {
+          "id": "BG-001",
+          "title": "Create Background Service Worker",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 45,
+          "description": "Set up the main background service worker",
+          "acceptanceCriteria": [
+            "Service worker registers correctly",
+            "Message listener setup",
+            "Alarm handlers for periodic tasks",
+            "Tab monitoring"
+          ],
+          "dependencies": ["SCAFFOLD-003"],
+          "outputFiles": [
+            "apps/extension/src/background/index.ts"
+          ],
+          "verification": "Service worker runs without errors"
+        },
+        {
+          "id": "BG-002",
+          "title": "Implement Message Handler",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 30,
+          "description": "Handle messages between popup, content, and background",
+          "acceptanceCriteria": [
+            "Route messages by type",
+            "Response handling",
+            "Error propagation",
+            "Type-safe messages"
+          ],
+          "dependencies": ["BG-001", "SCAFFOLD-004"],
+          "outputFiles": [
+            "apps/extension/src/background/messages.ts"
+          ],
+          "verification": "Messages route correctly between contexts"
+        },
+        {
+          "id": "BG-003",
+          "title": "Implement Badge Counter",
+          "status": "pending",
+          "priority": "medium",
+          "estimatedMinutes": 20,
+          "description": "Update extension badge with daily application count",
+          "acceptanceCriteria": [
+            "Badge shows number",
+            "Color indicates progress vs goal",
+            "Resets daily",
+            "Updates on new application"
+          ],
+          "dependencies": ["BG-001", "STORAGE-003"],
+          "outputFiles": [
+            "apps/extension/src/background/badge.ts"
+          ],
+          "verification": "Badge updates correctly"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-6",
+      "name": "Module 1 - Content Scripts",
+      "status": "pending",
+      "estimatedDays": 5,
+      "tasks": [
+        {
+          "id": "CONTENT-001",
+          "title": "Create Content Script Entry Point",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 30,
+          "description": "Set up content script that loads on ATS sites",
+          "acceptanceCriteria": [
+            "Script loads on matched URLs",
+            "Detects when on application page",
+            "Communicates with background",
+            "Injects UI elements"
+          ],
+          "dependencies": ["SCAFFOLD-003", "BG-002"],
+          "outputFiles": [
+            "apps/extension/src/content/index.ts"
+          ],
+          "verification": "Content script loads on Greenhouse page"
+        },
+        {
+          "id": "CONTENT-002",
+          "title": "Implement FormDetector",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 60,
+          "description": "Detect and classify form fields on page",
+          "acceptanceCriteria": [
+            "Detect all input types",
+            "Extract labels correctly",
+            "Handle dynamic forms",
+            "Return structured field data"
+          ],
+          "dependencies": ["CONTENT-001"],
+          "outputFiles": [
+            "apps/extension/src/content/detector/FormDetector.ts"
+          ],
+          "verification": "Correctly identifies fields on Greenhouse form"
+        },
+        {
+          "id": "CONTENT-003",
+          "title": "Implement Greenhouse Detector",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 45,
+          "description": "ATS-specific field detection for Greenhouse",
+          "acceptanceCriteria": [
+            "Handles Greenhouse form structure",
+            "Extracts custom questions",
+            "Handles multi-page forms",
+            "Detects submit button"
+          ],
+          "dependencies": ["CONTENT-002"],
+          "outputFiles": [
+            "apps/extension/src/content/detector/ats/greenhouse.ts"
+          ],
+          "verification": "All Greenhouse fields detected correctly"
+        },
+        {
+          "id": "CONTENT-004",
+          "title": "Implement Lever Detector",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "ATS-specific field detection for Lever",
+          "acceptanceCriteria": [
+            "Handles Lever form structure",
+            "Extracts custom questions",
+            "Handles file uploads",
+            "Detects submit button"
+          ],
+          "dependencies": ["CONTENT-002"],
+          "outputFiles": [
+            "apps/extension/src/content/detector/ats/lever.ts"
+          ],
+          "verification": "All Lever fields detected correctly"
+        },
+        {
+          "id": "CONTENT-005",
+          "title": "Implement AutoFiller Base",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 60,
+          "description": "Core auto-fill logic with field mapping",
+          "acceptanceCriteria": [
+            "Maps fields to profile data",
+            "Handles all input types",
+            "Triggers proper events",
+            "Reports fill status"
+          ],
+          "dependencies": ["CONTENT-002", "STORAGE-001"],
+          "outputFiles": [
+            "apps/extension/src/content/filler/AutoFiller.ts"
+          ],
+          "verification": "Basic fields fill correctly"
+        },
+        {
+          "id": "CONTENT-006",
+          "title": "Implement Fill Strategies",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 60,
+          "description": "Type-specific filling strategies",
+          "acceptanceCriteria": [
+            "TextStrategy for inputs",
+            "SelectStrategy for dropdowns",
+            "RadioStrategy for radio groups",
+            "CheckboxStrategy for checkboxes",
+            "DateStrategy for date fields"
+          ],
+          "dependencies": ["CONTENT-005"],
+          "outputFiles": [
+            "apps/extension/src/content/filler/strategies/TextStrategy.ts",
+            "apps/extension/src/content/filler/strategies/SelectStrategy.ts",
+            "apps/extension/src/content/filler/strategies/RadioStrategy.ts",
+            "apps/extension/src/content/filler/strategies/CheckboxStrategy.ts",
+            "apps/extension/src/content/filler/strategies/DateStrategy.ts"
+          ],
+          "verification": "Each field type fills correctly"
+        },
+        {
+          "id": "CONTENT-007",
+          "title": "Implement Generate Button UI",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "Inject Generate button for long text fields",
+          "acceptanceCriteria": [
+            "Button appears next to textarea",
+            "Opens generation modal",
+            "Shows profile context",
+            "Allows editing before insert"
+          ],
+          "dependencies": ["CONTENT-002", "LLM-002"],
+          "outputFiles": [
+            "apps/extension/src/content/ui/GenerateButton.ts",
+            "apps/extension/src/content/ui/GenerateModal.ts"
+          ],
+          "verification": "Generate button works on Greenhouse"
+        },
+        {
+          "id": "CONTENT-008",
+          "title": "Implement Applied Badge UI",
+          "status": "pending",
+          "priority": "medium",
+          "estimatedMinutes": 30,
+          "description": "Show badge when revisiting applied job",
+          "acceptanceCriteria": [
+            "Checks URL against applied jobs",
+            "Shows applied date",
+            "Non-intrusive positioning",
+            "Dismissible"
+          ],
+          "dependencies": ["CONTENT-001", "STORAGE-003"],
+          "outputFiles": [
+            "apps/extension/src/content/ui/AppliedBadge.ts"
+          ],
+          "verification": "Badge shows on previously applied job"
+        }
+      ]
+    },
+    {
+      "id": "PHASE-7",
+      "name": "Module 1 - Options Page",
+      "status": "pending",
+      "estimatedDays": 5,
+      "tasks": [
+        {
+          "id": "OPTIONS-001",
+          "title": "Create Options Page Layout",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 45,
+          "description": "Build the full-page options/dashboard layout",
+          "acceptanceCriteria": [
+            "Sidebar navigation",
+            "Main content area",
+            "Responsive design",
+            "Tab routing"
+          ],
+          "dependencies": ["SCAFFOLD-002"],
+          "outputFiles": [
+            "apps/extension/src/options/App.tsx",
+            "apps/extension/src/options/index.tsx",
+            "apps/extension/src/options/index.html",
+            "apps/extension/src/options/components/Sidebar.tsx"
+          ],
+          "verification": "Options page opens and navigates correctly"
+        },
+        {
+          "id": "OPTIONS-002",
+          "title": "Create Profile Editor Page",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedMinutes": 90,
+          "description": "Full profile editing interface",
+          "acceptanceCriteria": [
+            "Personal info section",
+            "Education section with add/remove",
+            "Work history section with add/remove",
+            "Skills section",
+            "Employment info section",
+            "Resume upload",
+            "Save/Cancel functionality"
+          ],
+          "dependencies": ["OPTIONS-001", "STORAGE-001"],
+          "outputFiles": [
+            "apps/extension/src/options/pages/Profile.tsx",
+            "apps/extension/src/options/components/PersonalInfoForm.tsx",
+            "apps/extension/src/options/components/EducationForm.tsx",
+            "apps/extension/src/options/components/WorkHistoryForm.tsx",
+            "apps/extension/src/options/components/SkillsForm.tsx",
+            "apps/extension/src/options/components/EmploymentInfoForm.tsx"
+          ],
+          "verification": "Profile edits save correctly"
+        },
+        {
+          "id": "OPTIONS-003",
+          "title": "Create Settings Page",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 60,
+          "description": "Settings configuration interface",
+          "acceptanceCriteria": [
+            "General settings section",
+            "Scraping settings section",
+            "LLM configuration section",
+            "Credentials vault section",
+            "ATS platform toggles"
+          ],
+          "dependencies": ["OPTIONS-001", "STORAGE-002"],
+          "outputFiles": [
+            "apps/extension/src/options/pages/Settings.tsx"
+          ],
+          "verification": "Settings persist after page reload"
+        },
+        {
+          "id": "OPTIONS-004",
+          "title": "Create Job Queue Page",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 60,
+          "description": "Display scraped jobs table",
+          "acceptanceCriteria": [
+            "Table with all job fields",
+            "Sort by date/relevance",
+            "Filter by status/platform",
+            "Apply/Skip actions",
+            "Link to job page"
+          ],
+          "dependencies": ["OPTIONS-001", "STORAGE-003"],
+          "outputFiles": [
+            "apps/extension/src/options/pages/Jobs.tsx",
+            "apps/extension/src/options/components/JobTable.tsx"
+          ],
+          "verification": "Jobs display and actions work"
+        },
+        {
+          "id": "OPTIONS-005",
+          "title": "Create History Page",
+          "status": "pending",
+          "priority": "medium",
+          "estimatedMinutes": 45,
+          "description": "Display applied jobs history",
+          "acceptanceCriteria": [
+            "List of applied jobs",
+            "Date and status",
+            "Search/filter",
+            "Export to CSV"
+          ],
+          "dependencies": ["OPTIONS-001", "STORAGE-003"],
+          "outputFiles": [
+            "apps/extension/src/options/pages/History.tsx"
+          ],
+          "verification": "History displays correctly"
+        },
+        {
+          "id": "OPTIONS-006",
+          "title": "Create LLM Config Page",
+          "status": "pending",
+          "priority": "high",
+          "estimatedMinutes": 45,
+          "description": "LLM provider configuration interface",
+          "acceptanceCriteria": [
+            "Provider selection",
+            "Endpoint configuration",
+            "Model selection",
+            "API key input (for cloud)",
+            "Connection test button"
+          ],
+          "dependencies": ["OPTIONS-001", "LLM-001"],
+          "outputFiles": [
+            "apps/extension/src/options/pages/LLMConfig.tsx"
+          ],
+          "verification": "LLM configuration saves and connects"
+        }
+      ]
+    }
+  ]
+}

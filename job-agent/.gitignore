@@ -18,3 +18,7 @@ coverage/
 *.zip
 tmp/
 temp/
+scafold_*
+fix.sh
+/DS_Store
+.DS_Store

@@ -211,3 +211,7 @@ __marimo__/
 /dev_docs/
 /docs
 SETUP.sh
+
+
+/DS_Store
+.DS_Store

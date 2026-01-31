@@ -1,2 +1,2 @@
 # Sift
-Sift: Decentralized Job application automation agent
+Sift: AI-powered job applications that find and fill for you. Sift smarter. Apply faster. 
