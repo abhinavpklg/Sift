@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "version": "0.5.0",
+    "lastUpdated": "2025-01-31",
+    "totalTasks": 47,
+    "completedTasks": 20,
+    "currentPhase": "background-service"
+  },
+  "completed": [
+    "PHASE-0: Planning",
+    "PHASE-1: Scaffolding",
+    "PHASE-2: Popup UI", 
+    "PHASE-3: Storage Layer (STORAGE-001 to 004)",
+    "PHASE-4: LLM Layer (LLM-001 to 004)"
+  ],
+  "nextPhase": {
+    "id": "PHASE-5",
+    "name": "Background Service",
+    "tasks": [
+      {
+        "id": "BG-001",
+        "title": "Create Background Service Worker",
+        "status": "pending",
+        "priority": "critical"
+      },
+      {
+        "id": "BG-002", 
+        "title": "Implement Message Handler",
+        "status": "pending",
+        "priority": "critical"
+      },
+      {
+        "id": "BG-003",
+        "title": "Implement Badge Counter",
+        "status": "pending",
+        "priority": "medium"
+      }
+    ]
+  }
+}

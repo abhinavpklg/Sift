@@ -1,42 +1,43 @@
 # Changelog
+All notable changes to Sift will be documented in this file.
 
-## [Unreleased]
-- Background service worker
-- Content scripts for form detection
-- Auto-fill functionality
+---
+
+## [0.6.0] - 2025-01-31
+
+### Added
+- **Background Service Complete**
+  - Service worker with message routing
+  - 30+ message types for communication
+  - BadgeManager with color-coded progress
+  - ATS site detection (10+ platforms)
+  - Daily reset alarm
+  - Keep-alive mechanism for MV3
+
+### Message Types
+- Profile: GET, CREATE, UPDATE, DELETE, SET_ACTIVE
+- Settings: GET, UPDATE, SET_LLM_PROVIDER
+- Jobs: GET, ADD, MARK_APPLIED, IS_URL_APPLIED, GET_STATS
+- Responses: SAVE, FIND_SIMILAR, GET_BEST
+- LLM: GENERATE, CHECK_CONNECTION, FORM_RESPONSE, MATCH_FIELD
+- Badge: UPDATE, GET_TODAY_COUNT
+- Content: READY, FORM_DETECTED, FILL_FORM
 
 ---
 
 ## [0.5.0] - 2025-01-31
 
 ### Added
-- **LLM Layer Complete** 🎉
-  - Multi-provider support with unified interface
-  - **Ollama** - Local LLM (free, private)
-  - **OpenAI** - GPT-4o, GPT-4, GPT-3.5
-  - **Anthropic** - Claude 3.5 Sonnet/Haiku
-  - **Google Gemini** - Gemini 1.5 Pro/Flash (free tier)
-  - **OpenRouter** - Access 100+ models (free tier available)
-  - **Groq** - Ultra-fast inference (free tier)
-  
-- **LLMRouter** - Unified interface
-  - Automatic fallback support
-  - Provider switching at runtime
-  - Settings integration
-  - Connection health monitoring
-
-- **Form Filling Helpers**
-  - `matchFieldToProfile()` - AI field matching
-  - `generateFormResponse()` - Answer generation
-  - `summarizeJobDescription()` - Job summaries
-  - `extractTechStack()` - Tech extraction
-  - `calculateRelevanceScore()` - Job matching
-
-- **Prompt Templates**
-  - Field matching prompts
-  - Response generation prompts
-  - Cover letter generation
-  - Common field patterns
+- **LLM Layer Complete**
+  - BaseLLMClient abstract class
+  - OllamaClient (local, free)
+  - OpenAIClient (GPT-4/3.5)
+  - AnthropicClient (Claude 3.5)
+  - GeminiClient (free tier)
+  - OpenRouterClient (multi-model)
+  - GroqClient (ultra-fast)
+  - LLMRouter with fallback support
+  - Form filling prompt templates
 
 ---
 
@@ -44,34 +45,40 @@
 
 ### Added
 - **Storage Layer Complete**
-  - ProfileStorage - User profiles CRUD
-  - SettingsStorage - App configuration
-  - JobStorage - Job tracking & deduplication
-  - ResponseStorage - AI learning from inputs
+  - ProfileStorage with CRUD, import/export
+  - SettingsStorage with LLM configuration
+  - JobStorage with URL deduplication
+  - ResponseStorage with similarity matching
 
 ---
 
 ## [0.3.0] - 2025-01-30
 
 ### Added
-- Popup UI complete
-- Options page shell
-- Rebranded to "Sift"
+- **Popup UI Complete**
+  - Sift branding and gradient icon
+  - Today's Progress card
+  - Profile switcher
+  - LLM status indicator
+  - Open Dashboard button
 
 ---
 
 ## [0.2.0] - 2025-01-30
 
 ### Added
-- Project scaffolding
-- Turborepo + pnpm workspace
-- Vite + React + TypeScript
+- **Project Scaffolding**
+  - Turborepo monorepo
+  - Vite + React + TypeScript
+  - Tailwind CSS
+  - Manifest V3
 
 ---
 
 ## [0.1.0] - 2025-01-30
 
 ### Added
-- Initial planning
-- PRD v1.0
-- Architecture design
+- **Documentation**
+  - PRD v1.0
+  - Module 1 Technical Spec
+  - Task breakdown
