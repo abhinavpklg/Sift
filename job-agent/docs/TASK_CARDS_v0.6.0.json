@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "version": "0.6.0",
+    "lastUpdated": "2025-01-31",
+    "totalTasks": 47,
+    "completedTasks": 23,
+    "currentPhase": "content-scripts"
+  },
+  "completed": [
+    "PHASE-0: Planning",
+    "PHASE-1: Scaffolding",
+    "PHASE-2: Popup UI",
+    "PHASE-3: Storage Layer (STORAGE-001 to 004)",
+    "PHASE-4: LLM Layer (LLM-001 to 004)",
+    "PHASE-5: Background Service (BG-001 to 003)"
+  ],
+  "nextPhase": {
+    "id": "PHASE-6",
+    "name": "Content Scripts",
+    "tasks": [
+      {
+        "id": "CONTENT-001",
+        "title": "Content Script Entry Point",
+        "description": "Create entry point that loads on ATS sites, notifies background",
+        "status": "pending",
+        "priority": "critical",
+        "files": [
+          "content/index.ts",
+          "content/ContentManager.ts"
+        ],
+        "acceptance": [
+          "Loads on Greenhouse, Lever, Ashby URLs",
+          "Sends CONTENT_READY message to background",
+          "Detects when on application form page"
+        ]
+      },
+      {
+        "id": "CONTENT-002",
+        "title": "Form Detector",
+        "description": "Generic form field detection for ATS sites",
+        "status": "pending",
+        "priority": "critical",
+        "files": [
+          "content/FormDetector.ts",
+          "content/types.ts"
+        ],
+        "acceptance": [
+          "Finds all form fields on page",
+          "Extracts labels, types, required status",
+          "Sends FORM_DETECTED message with field list"
+        ]
+      },
+      {
+        "id": "CONTENT-003",
+        "title": "Greenhouse Detection",
+        "description": "Greenhouse-specific form field detection",
+        "status": "pending",
+        "priority": "high",
+        "files": [
+          "content/detectors/GreenhouseDetector.ts"
+        ],
+        "acceptance": [
+          "Detects Greenhouse application forms",
+          "Maps Greenhouse-specific fields",
+          "Handles multi-page applications"
+        ]
+      },
+      {
+        "id": "CONTENT-004",
+        "title": "Lever Detection",
+        "description": "Lever-specific form field detection",
+        "status": "pending",
+        "priority": "high",
+        "files": [
+          "content/detectors/LeverDetector.ts"
+        ],
+        "acceptance": [
+          "Detects Lever application forms",
+          "Maps Lever-specific fields",
+          "Handles resume upload fields"
+        ]
+      },
+      {
+        "id": "CONTENT-005",
+        "title": "AutoFiller",
+        "description": "Fill form fields with profile data",
+        "status": "pending",
+        "priority": "high",
+        "files": [
+          "content/AutoFiller.ts"
+        ],
+        "acceptance": [
+          "Fills text inputs, textareas, selects",
+          "Handles file inputs (resume)",
+          "Triggers change events properly"
+        ]
+      }
+    ]
+  }
+}
