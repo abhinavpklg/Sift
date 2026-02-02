@@ -97,6 +97,7 @@ export class SettingsStorage {
       scraping: { ...current.scraping, ...updates.scraping },
       llm: { ...current.llm, ...updates.llm },
       credentials: updates.credentials ?? current.credentials,
+      customProviders: updates.customProviders ?? current.customProviders,
     };
 
     await this.saveAll(updated);
@@ -382,6 +383,7 @@ export class SettingsStorage {
       },
       llm: { ...DEFAULT_SETTINGS.llm, ...stored.llm },
       credentials: stored.credentials ?? [],
+      customProviders: stored.customProviders ?? [],
     };
   }
 

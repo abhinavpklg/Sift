@@ -1,14 +1,16 @@
 /**
  * LLM Types - Unified interface for all LLM providers
+ * UPDATED: Added custom provider support
  */
 
 export type LLMProvider = 
-  | 'ollama'      // Local
-  | 'openai'      // OpenAI
-  | 'anthropic'   // Anthropic/Claude
-  | 'gemini'      // Google Gemini
-  | 'openrouter'  // OpenRouter (free tier available)
-  | 'groq';       // Groq (fast & free tier)
+  | 'ollama'
+  | 'openai'
+  | 'anthropic'
+  | 'gemini'
+  | 'openrouter'
+  | 'groq'
+  | 'custom';
 
 export interface LLMConfig {
   provider: LLMProvider;
@@ -18,6 +20,7 @@ export interface LLMConfig {
   maxTokens: number;
   temperature: number;
   timeout: number;
+  customProviderId?: string; // For custom providers
 }
 
 export interface GenerateOptions {
@@ -49,7 +52,7 @@ export interface LLMClient {
 }
 
 export interface ProviderInfo {
-  id: LLMProvider;
+  id: LLMProvider | string;
   name: string;
   description: string;
   requiresApiKey: boolean;
@@ -57,6 +60,7 @@ export interface ProviderInfo {
   defaultModel: string;
   freetier: boolean;
   models: ModelInfo[];
+  isCustom?: boolean;
 }
 
 export interface ModelInfo {
@@ -66,10 +70,21 @@ export interface ModelInfo {
   description?: string;
 }
 
+export interface CustomProvider {
+  id: string;
+  name: string;
+  description: string;
+  endpoint: string;
+  apiKeyRequired: boolean;
+  models: ModelInfo[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 /**
  * Provider configurations and defaults
  */
-export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
+export const PROVIDER_INFO: Record<string, ProviderInfo> = {
   ollama: {
     id: 'ollama',
     name: 'Ollama (Local)',
@@ -131,7 +146,7 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
   openrouter: {
     id: 'openrouter',
     name: 'OpenRouter',
-    description: 'Access many models with one API (free tier available)',
+    description: 'Access many models with one API',
     requiresApiKey: true,
     defaultEndpoint: 'https://openrouter.ai/api/v1',
     defaultModel: 'meta-llama/llama-3.2-3b-instruct:free',
@@ -147,7 +162,7 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
   groq: {
     id: 'groq',
     name: 'Groq',
-    description: 'Ultra-fast inference (free tier available)',
+    description: 'Ultra-fast inference',
     requiresApiKey: true,
     defaultEndpoint: 'https://api.groq.com/openai/v1',
     defaultModel: 'llama-3.3-70b-versatile',
@@ -166,6 +181,16 @@ export const PROVIDER_INFO: Record<LLMProvider, ProviderInfo> = {
  */
 export function getDefaultConfig(provider: LLMProvider): LLMConfig {
   const info = PROVIDER_INFO[provider];
+  if (!info) {
+    return {
+      provider: 'custom',
+      endpoint: '',
+      model: '',
+      maxTokens: 1024,
+      temperature: 0.7,
+      timeout: 30000,
+    };
+  }
   return {
     provider,
     endpoint: info.defaultEndpoint,

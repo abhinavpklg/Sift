@@ -176,10 +176,10 @@ describe('SettingsStorage', () => {
     });
 
     it('should set custom endpoint', async () => {
-      await SettingsStorage.setLLMProvider('custom', 'http://my-server:8080');
+      await SettingsStorage.setLLMProvider('ollama', 'http://my-server:8080');
       const llm = await SettingsStorage.getLLM();
       
-      expect(llm.provider).toBe('custom');
+      expect(llm.provider).toBe('ollama');
       expect(llm.endpoint).toBe('http://my-server:8080');
     });
   });
