@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "version": "0.8.4",
+    "lastUpdated": "2026-02-01",
+    "totalTasks": 47,
+    "completedTasks": 31,
+    "currentPhase": "options-pages-complete"
+  },
+  "completed": [
+    "PHASE-0: Planning",
+    "PHASE-1: Scaffolding",
+    "PHASE-2: Popup UI",
+    "PHASE-3: Storage Layer",
+    "PHASE-4: LLM Layer",
+    "PHASE-5: Background Service",
+    "PHASE-6: Content Scripts",
+    "PHASE-7: Options Pages",
+    "CONTENT-004: Auto-Fill Overlay UI (VERIFIED)",
+    "OPTIONS-001: Profile Management (VERIFIED)",
+    "OPTIONS-002: Job History Page (VERIFIED)",
+    "OPTIONS-003: AI Configuration (VERIFIED)",
+    "OPTIONS-004: Settings Page (VERIFIED)"
+  ],
+  "backlog": [
+    { "id": "BUG-001", "title": "Greenhouse iframe", "priority": "medium" },
+    { "id": "BUG-002", "title": "Ashby slow render", "priority": "medium" },
+    { "id": "BUG-003", "title": "qwen3 empty response", "priority": "low" },
+    { "id": "BUG-004", "title": "Ollama CORS", "priority": "low" }
+  ],
+  "completedPhase": {
+    "id": "PHASE-7",
+    "name": "Options Pages",
+    "progress": "4/4",
+    "status": "COMPLETE",
+    "tasks": [
+      {
+        "id": "OPTIONS-001",
+        "title": "Profile Management Page",
+        "status": "completed",
+        "completedDate": "2026-02-01"
+      },
+      {
+        "id": "OPTIONS-002",
+        "title": "Job History Page",
+        "status": "completed",
+        "completedDate": "2026-02-01"
+      },
+      {
+        "id": "OPTIONS-003",
+        "title": "AI Configuration Page",
+        "status": "completed",
+        "completedDate": "2026-02-01"
+      },
+      {
+        "id": "OPTIONS-004",
+        "title": "Settings Page",
+        "status": "completed",
+        "completedDate": "2026-02-01"
+      }
+    ]
+  },
+  "nextPhase": {
+    "id": "PHASE-8",
+    "name": "Testing & Polish",
+    "tasks": [
+      { "id": "TEST-001", "title": "End-to-end flow testing", "priority": "high" },
+      { "id": "TEST-002", "title": "Bug fixes (BUG-001 to BUG-004)", "priority": "medium" },
+      { "id": "TEST-003", "title": "Performance optimization", "priority": "medium" },
+      { "id": "TEST-004", "title": "Chrome Web Store preparation", "priority": "low" }
+    ]
+  }
+}
