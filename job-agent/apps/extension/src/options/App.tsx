@@ -1,6 +1,6 @@
 /**
  * Options App - Main entry point
- * Updated: Added AI Configuration page
+ * Updated: Added Settings page (OPTIONS-004)
  */
 
 import { useState } from 'react';
@@ -13,6 +13,7 @@ import {
 import { ProfilePage } from './pages/ProfilePage';
 import { JobHistoryPage } from './pages/JobHistoryPage';
 import { AIConfigPage } from './pages/AIConfigPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useTheme } from './hooks/useTheme';
 
@@ -81,7 +82,7 @@ export default function App() {
         {/* Footer */}
         <div className="p-3 border-t border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500">Sift v0.8.3</span>
+            <span className="text-xs text-gray-500">Sift v0.8.4</span>
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
           </div>
         </div>
@@ -92,21 +93,8 @@ export default function App() {
         {activePage === 'profile' && <ProfilePage />}
         {activePage === 'history' && <JobHistoryPage />}
         {activePage === 'ai' && <AIConfigPage />}
-        {activePage === 'settings' && <SettingsPlaceholder />}
+        {activePage === 'settings' && <SettingsPage />}
       </main>
-    </div>
-  );
-}
-
-// Placeholder component
-function SettingsPlaceholder() {
-  return (
-    <div className="h-full flex items-center justify-center bg-white dark:bg-gray-800">
-      <div className="text-center">
-        <Settings className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Settings</h2>
-        <p className="text-gray-500">Coming in OPTIONS-004</p>
-      </div>
     </div>
   );
 }
