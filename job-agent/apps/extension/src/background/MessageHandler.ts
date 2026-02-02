@@ -175,7 +175,7 @@ export class MessageHandler {
     await SettingsStorage.update({
       llm: {
         ...settings.llm,
-        provider: payload.provider as 'ollama' | 'openai' | 'anthropic' | 'custom',
+        provider: payload.provider as LLMProvider,
         endpoint: payload.endpoint || settings.llm.endpoint,
         apiKey: payload.apiKey,
         model: payload.model || settings.llm.model,

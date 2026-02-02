@@ -1,13 +1,16 @@
 /**
  * Settings Types for Sift Chrome Extension
- * STORAGE-002: Type definitions for user settings
+ * UPDATED: Added custom providers support
  */
+
+import type { LLMProvider, CustomProvider } from '../llm/types';
 
 export interface UserSettings {
   general: GeneralSettings;
   scraping: ScrapingSettings;
   llm: LLMSettings;
   credentials: EncryptedCredential[];
+  customProviders: CustomProvider[];
 }
 
 export interface GeneralSettings {
@@ -31,13 +34,14 @@ export interface ScrapingSettings {
 }
 
 export interface LLMSettings {
-  provider: 'ollama' | 'openai' | 'anthropic' | 'custom';
+  provider: LLMProvider;
   endpoint: string;
   model: string;
   apiKey?: string;
   maxTokens: number;
   temperature: number;
   timeout: number;
+  customProviderId?: string;
 }
 
 export interface EncryptedCredential {
@@ -58,7 +62,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     autoSubmit: false,
     autoNextPage: false,
     notificationSound: true,
-    darkMode: 'system',
+    darkMode: 'dark',
     showAppliedBadge: true,
     confirmBeforeSubmit: true,
   },
@@ -87,26 +91,19 @@ export const DEFAULT_SETTINGS: UserSettings = {
     timeout: 30000,
   },
   credentials: [],
+  customProviders: [],
 };
 
-/**
- * Settings version for migrations
- */
-export const SETTINGS_VERSION = 1;
+export const SETTINGS_VERSION = 2;
 
-/**
- * Partial settings update type
- */
 export type SettingsUpdate = {
   general?: Partial<GeneralSettings>;
   scraping?: Partial<ScrapingSettings>;
   llm?: Partial<LLMSettings>;
   credentials?: EncryptedCredential[];
+  customProviders?: CustomProvider[];
 };
 
-/**
- * Available ATS platforms
- */
 export const ATS_PLATFORMS = [
   { id: 'greenhouse.io', name: 'Greenhouse', category: 'mid-market' },
   { id: 'lever.co', name: 'Lever', category: 'mid-market' },

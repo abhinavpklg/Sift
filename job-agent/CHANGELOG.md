@@ -3,25 +3,38 @@ All notable changes to Sift will be documented in this file.
 
 ---
 
+## [0.7.0] - 2025-01-31
+
+### Added
+- **Content Scripts Complete**
+  - Platform detection for 10 ATS systems
+  - FormDetector with 40+ profile key patterns
+  - AutoFiller with React/Vue event compatibility
+  - Support for text, email, tel, select, radio, checkbox fields
+  - Simulated typing option
+  - Console debug API (window.__sift)
+
+### Known Issues
+- Greenhouse: Forms in iframes not detected
+- Ashby: React SPA loads slowly, form not found
+- qwen3: LLM returns empty text (model-specific)
+- Ollama: CORS requires OLLAMA_ORIGINS env var
+
+### Tested Platforms
+- ✅ Lever (fully working)
+- ⚠️ Greenhouse (iframe issue)
+- ⚠️ Ashby (slow load issue)
+
+---
+
 ## [0.6.0] - 2025-01-31
 
 ### Added
 - **Background Service Complete**
-  - Service worker with message routing
-  - 30+ message types for communication
+  - Service worker with 30+ message types
   - BadgeManager with color-coded progress
-  - ATS site detection (10+ platforms)
+  - ATS site detection
   - Daily reset alarm
-  - Keep-alive mechanism for MV3
-
-### Message Types
-- Profile: GET, CREATE, UPDATE, DELETE, SET_ACTIVE
-- Settings: GET, UPDATE, SET_LLM_PROVIDER
-- Jobs: GET, ADD, MARK_APPLIED, IS_URL_APPLIED, GET_STATS
-- Responses: SAVE, FIND_SIMILAR, GET_BEST
-- LLM: GENERATE, CHECK_CONNECTION, FORM_RESPONSE, MATCH_FIELD
-- Badge: UPDATE, GET_TODAY_COUNT
-- Content: READY, FORM_DETECTED, FILL_FORM
 
 ---
 
@@ -29,13 +42,7 @@ All notable changes to Sift will be documented in this file.
 
 ### Added
 - **LLM Layer Complete**
-  - BaseLLMClient abstract class
-  - OllamaClient (local, free)
-  - OpenAIClient (GPT-4/3.5)
-  - AnthropicClient (Claude 3.5)
-  - GeminiClient (free tier)
-  - OpenRouterClient (multi-model)
-  - GroqClient (ultra-fast)
+  - 6 providers: Ollama, OpenAI, Anthropic, Gemini, OpenRouter, Groq
   - LLMRouter with fallback support
   - Form filling prompt templates
 
@@ -45,10 +52,9 @@ All notable changes to Sift will be documented in this file.
 
 ### Added
 - **Storage Layer Complete**
-  - ProfileStorage with CRUD, import/export
-  - SettingsStorage with LLM configuration
-  - JobStorage with URL deduplication
-  - ResponseStorage with similarity matching
+  - ProfileStorage, SettingsStorage, JobStorage, ResponseStorage
+  - URL deduplication
+  - Response similarity matching
 
 ---
 
@@ -56,11 +62,10 @@ All notable changes to Sift will be documented in this file.
 
 ### Added
 - **Popup UI Complete**
-  - Sift branding and gradient icon
+  - Sift branding
   - Today's Progress card
   - Profile switcher
   - LLM status indicator
-  - Open Dashboard button
 
 ---
 
@@ -70,7 +75,6 @@ All notable changes to Sift will be documented in this file.
 - **Project Scaffolding**
   - Turborepo monorepo
   - Vite + React + TypeScript
-  - Tailwind CSS
   - Manifest V3
 
 ---
@@ -80,5 +84,4 @@ All notable changes to Sift will be documented in this file.
 ### Added
 - **Documentation**
   - PRD v1.0
-  - Module 1 Technical Spec
-  - Task breakdown
+  - Technical spec

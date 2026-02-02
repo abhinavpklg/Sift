@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "version": "0.8.0",
+    "lastUpdated": "2026-02-01",
+    "totalTasks": 47,
+    "completedTasks": 27,
+    "currentPhase": "options-pages"
+  },
+  "completed": [
+    "PHASE-0: Planning",
+    "PHASE-1: Scaffolding",
+    "PHASE-2: Popup UI",
+    "PHASE-3: Storage Layer",
+    "PHASE-4: LLM Layer",
+    "PHASE-5: Background Service",
+    "PHASE-6: Content Scripts",
+    "CONTENT-004: Auto-Fill Overlay UI (VERIFIED)"
+  ],
+  "backlog": [
+    { "id": "BUG-001", "title": "Greenhouse iframe", "priority": "medium" },
+    { "id": "BUG-002", "title": "Ashby slow render", "priority": "medium" },
+    { "id": "BUG-003", "title": "qwen3 empty response", "priority": "low" },
+    { "id": "BUG-004", "title": "Ollama CORS", "priority": "low" }
+  ],
+  "nextPhase": {
+    "id": "PHASE-7",
+    "name": "Options Pages",
+    "tasks": [
+      {
+        "id": "OPTIONS-001",
+        "title": "Profile Management Page",
+        "description": "Create, edit, delete profiles with full form",
+        "status": "pending",
+        "priority": "high"
+      },
+      {
+        "id": "OPTIONS-002",
+        "title": "Job History Page",
+        "description": "Show applied jobs with stats and filters",
+        "status": "pending",
+        "priority": "high"
+      },
+      {
+        "id": "OPTIONS-003",
+        "title": "AI Configuration Page",
+        "description": "LLM provider selection and testing",
+        "status": "pending",
+        "priority": "medium"
+      },
+      {
+        "id": "OPTIONS-004",
+        "title": "Settings Page",
+        "description": "General settings, daily goal, theme",
+        "status": "pending",
+        "priority": "medium"
+      }
+    ]
+  }
+}

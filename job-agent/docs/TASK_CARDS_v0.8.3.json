@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "version": "0.8.3",
+    "lastUpdated": "2026-02-01",
+    "totalTasks": 47,
+    "completedTasks": 30,
+    "currentPhase": "options-pages"
+  },
+  "completed": [
+    "PHASE-0: Planning",
+    "PHASE-1: Scaffolding",
+    "PHASE-2: Popup UI",
+    "PHASE-3: Storage Layer",
+    "PHASE-4: LLM Layer",
+    "PHASE-5: Background Service",
+    "PHASE-6: Content Scripts",
+    "CONTENT-004: Auto-Fill Overlay UI (VERIFIED)",
+    "OPTIONS-001: Profile Management (VERIFIED)",
+    "OPTIONS-002: Job History Page (VERIFIED)",
+    "OPTIONS-003: AI Configuration (VERIFIED)"
+  ],
+  "backlog": [
+    { "id": "BUG-001", "title": "Greenhouse iframe", "priority": "medium" },
+    { "id": "BUG-002", "title": "Ashby slow render", "priority": "medium" },
+    { "id": "BUG-003", "title": "qwen3 empty response", "priority": "low" },
+    { "id": "BUG-004", "title": "Ollama CORS", "priority": "low" }
+  ],
+  "currentPhase": {
+    "id": "PHASE-7",
+    "name": "Options Pages",
+    "progress": "3/4",
+    "tasks": [
+      {
+        "id": "OPTIONS-001",
+        "title": "Profile Management Page",
+        "status": "completed",
+        "completedDate": "2026-02-01"
+      },
+      {
+        "id": "OPTIONS-002",
+        "title": "Job History Page",
+        "status": "completed",
+        "completedDate": "2026-02-01"
+      },
+      {
+        "id": "OPTIONS-003",
+        "title": "AI Configuration Page",
+        "status": "completed",
+        "completedDate": "2026-02-01"
+      },
+      {
+        "id": "OPTIONS-004",
+        "title": "Settings Page",
+        "description": "General settings, daily goal, scraping config",
+        "status": "pending",
+        "priority": "medium"
+      }
+    ]
+  }
+}

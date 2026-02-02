@@ -1,151 +1,111 @@
+/**
+ * Options App - Main entry point
+ * Updated: Added AI Configuration page
+ */
+
 import { useState } from 'react';
 import { 
-  Search, 
   User, 
-  Settings, 
   History, 
-  Briefcase,
-  Cpu
+  Cpu, 
+  Settings
 } from 'lucide-react';
+import { ProfilePage } from './pages/ProfilePage';
+import { JobHistoryPage } from './pages/JobHistoryPage';
+import { AIConfigPage } from './pages/AIConfigPage';
+import { ThemeToggle } from './components/ThemeToggle';
+import { useTheme } from './hooks/useTheme';
 
-type Page = 'profile' | 'jobs' | 'history' | 'settings' | 'llm';
+type Page = 'profile' | 'history' | 'ai' | 'settings';
+
+const navigation: { id: Page; label: string; icon: React.ElementType }[] = [
+  { id: 'profile', label: 'Profile', icon: User },
+  { id: 'history', label: 'History', icon: History },
+  { id: 'ai', label: 'AI Config', icon: Cpu },
+  { id: 'settings', label: 'Settings', icon: Settings },
+];
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('profile');
+  const [activePage, setActivePage] = useState<Page>('profile');
+  const { theme, toggleTheme, isLoaded } = useTheme();
 
-  const navItems = [
-    { id: 'profile' as Page, icon: User, label: 'Profile' },
-    { id: 'jobs' as Page, icon: Briefcase, label: 'Job Queue' },
-    { id: 'history' as Page, icon: History, label: 'History' },
-    { id: 'llm' as Page, icon: Cpu, label: 'AI Config' },
-    { id: 'settings' as Page, icon: Settings, label: 'Settings' },
-  ];
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+      <aside className="w-48 flex-shrink-0 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
         {/* Logo */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
-              <Search className="w-6 h-6 text-white" />
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">S</span>
             </div>
             <div>
-              <h1 className="font-bold text-xl text-gray-900 dark:text-white">Sift</h1>
-              <p className="text-xs text-gray-500">Sift smarter. Apply faster.</p>
+              <h1 className="font-bold text-gray-900 dark:text-white">Sift</h1>
+              <p className="text-[10px] text-gray-500">Sift smarter. Apply faster.</p>
             </div>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4">
-          <ul className="space-y-1">
-            {navItems.map(item => (
-              <li key={item.id}>
-                <button
-                  onClick={() => setCurrentPage(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    currentPage === item.id
-                      ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/20 dark:text-primary-400'
-                      : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <item.icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+        <nav className="flex-1 p-2">
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            const isActive = activePage === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActivePage(item.id)}
+                className={`
+                  w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium mb-1 transition-colors
+                  ${isActive
+                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }
+                `}
+              >
+                <Icon className="w-4 h-4" />
+                {item.label}
+              </button>
+            );
+          })}
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-xs text-gray-500 text-center">
-            Sift v0.1.0
-          </p>
+        <div className="p-3 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-500">Sift v0.8.3</span>
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+          </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
-        <div className="max-w-4xl">
-          {currentPage === 'profile' && <ProfilePlaceholder />}
-          {currentPage === 'jobs' && <JobsPlaceholder />}
-          {currentPage === 'history' && <HistoryPlaceholder />}
-          {currentPage === 'llm' && <LLMPlaceholder />}
-          {currentPage === 'settings' && <SettingsPlaceholder />}
-        </div>
+      <main className="flex-1 h-screen overflow-hidden">
+        {activePage === 'profile' && <ProfilePage />}
+        {activePage === 'history' && <JobHistoryPage />}
+        {activePage === 'ai' && <AIConfigPage />}
+        {activePage === 'settings' && <SettingsPlaceholder />}
       </main>
     </div>
   );
 }
 
-function ProfilePlaceholder() {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Profile Management</h2>
-      <p className="text-gray-500 mb-6">Manage your job application profiles</p>
-      <div className="card">
-        <p className="text-gray-600 dark:text-gray-400">
-          Profile editor coming soon...
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function JobsPlaceholder() {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Job Queue</h2>
-      <p className="text-gray-500 mb-6">Jobs sifted and ready to apply</p>
-      <div className="card">
-        <p className="text-gray-600 dark:text-gray-400">
-          Job queue coming soon...
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function HistoryPlaceholder() {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Application History</h2>
-      <p className="text-gray-500 mb-6">Track your job applications</p>
-      <div className="card">
-        <p className="text-gray-600 dark:text-gray-400">
-          History coming soon...
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function LLMPlaceholder() {
-  return (
-    <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">AI Configuration</h2>
-      <p className="text-gray-500 mb-6">Configure your local or cloud AI</p>
-      <div className="card">
-        <p className="text-gray-600 dark:text-gray-400">
-          AI configuration coming soon...
-        </p>
-      </div>
-    </div>
-  );
-}
-
+// Placeholder component
 function SettingsPlaceholder() {
   return (
-    <div>
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Settings</h2>
-      <p className="text-gray-500 mb-6">Customize your Sift experience</p>
-      <div className="card">
-        <p className="text-gray-600 dark:text-gray-400">
-          Settings coming soon...
-        </p>
+    <div className="h-full flex items-center justify-center bg-white dark:bg-gray-800">
+      <div className="text-center">
+        <Settings className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Settings</h2>
+        <p className="text-gray-500">Coming in OPTIONS-004</p>
       </div>
     </div>
   );
